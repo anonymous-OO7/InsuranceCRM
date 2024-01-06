@@ -46,7 +46,26 @@ const CustomDrawer = props => {
     loadUserInfo();
   }, []);
 
+  function getFirstAndLastCharacters(name) {
 
+    try {
+      const words = name.split(' ');
+      if (words.length === 1) {
+          return words[0][0].toUpperCase();
+      }
+      const firstChar = words[0][0].toUpperCase();
+      const lastChar = words[words.length - 1][0].toUpperCase();
+      return firstChar + lastChar;
+      
+    } catch (error) {
+      
+      console.log("EERO")
+    }
+  
+
+}
+
+const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
 
 
   return (
@@ -57,49 +76,41 @@ const CustomDrawer = props => {
         <ImageBackground
           // source={require('../../assets/images/profileimage.png')}
           style={{padding: 20}}>
-          <Image
+          {/* <Image
             source={require('../../assets/images/pImage.png')}
             style={{height: 90, width: 80, borderRadius: 40, marginBottom: 10}}
-          />
+          /> */}
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+
+           <View style={{backgroundColor:"#007FFF",justifyContent: 'center', alignItems: 'center',height: responsiveHeight(10), width: responsiveHeight(10), borderRadius: responsiveHeight(8), marginBottom: 10}}>
+           <Text style={styles.profileText}>{namelogo}</Text>
+          </View>
           <Text
             style={{
               color: Colors.black,
-              fontSize: 18,
+              fontSize: responsiveFontSize(3),
               fontFamily: 'Poppins-Medium',
               marginBottom: 5,
             }}>
            {userInfo?.agency_name}
           </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                color: Colors.black,
-                fontFamily: 'Poppins-Regular',
-                marginRight: 5,
-              }}>
-           {userInfo?.name}
-            </Text>
-            {/* <FontAwesome5 name="coins" size={14} color="#fff" /> */}
-          </View>
-
+          
           <Text
             style={{
               color: Colors.black,
-              fontSize: 14,
+              fontSize: responsiveFontSize(1.7),
+              fontFamily:'Poppins-Medium',
+            }}>Phone no: {userInfo?.mobile}</Text>
+          <Text
+            style={{
+              color: Colors.black,
+              fontSize: responsiveFontSize(1.3),
               fontFamily:'Poppins-Medium',
               marginBottom: 5,
-            }}>
-           {userInfo?.email}
-          </Text>
-          <Text
-            style={{
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily:'Poppins-Medium',
-              marginBottom: 2,
-            }}>
-           {userInfo?.mobile}
-          </Text>
+            }}>Email: {userInfo?.email}</Text>
+      
+          </View>
+      
         </ImageBackground>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />
@@ -205,7 +216,13 @@ const styles = StyleSheet.create({
     color:"black",
     width:responsiveWidth(82),
     marginLeft:responsiveWidth(2),
-  }
+  },
+  profileText: {
+    fontSize: responsiveFontSize(3.4),
+    fontFamily: 'Rubik-Regular',
+    color: 'white',
+
+  },  
 });
 
 

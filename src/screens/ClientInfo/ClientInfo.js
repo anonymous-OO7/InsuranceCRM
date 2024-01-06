@@ -107,17 +107,30 @@ const ClientInfo = props => {
   const getBackgroundColor = (status) => {
     switch (status) {
       case 'new_lead':
-        return '#3D8BFF';
+        return '#E3CBCB';
       case 'active':
-        return '#61A60E';
+        return '#DCE5C2';
       case 'in_progress':
-        return '#FF9900';
+        return '#BCD7EB';
       case 'cold_lead':
-        return '#24B0FF';
+        return '#DFCDE2';
       default:
         return 'gray'; // Default color if none of the conditions are met
     }
   };
+
+  function getFirstAndLastCharacters(name) {
+    const words = name.split(' ');
+    if (words.length === 1) {
+        return words[0][0].toUpperCase();
+    }
+    const firstChar = words[0][0].toUpperCase();
+    const lastChar = words[words.length - 1][0].toUpperCase();
+    return firstChar + lastChar;
+}
+
+  const namelogo = getFirstAndLastCharacters(clientdata?.name)
+
 
   return (
     <View style={styles.maincontainer}>
@@ -136,7 +149,7 @@ const ClientInfo = props => {
           <View style={[styles.profileButton,{ backgroundColor:   getBackgroundColor(clientdata?.status) }]}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={styles.profileText}>{clientdata?.name[0]}</Text>
+              <Text style={styles.profileText}>{namelogo}</Text>
             </View>
           </View>
 
@@ -195,7 +208,6 @@ const styles = StyleSheet.create({
     width: responsiveHeight(6),
     borderRadius: responsiveHeight(6),
     marginLeft: responsiveWidth(2),
-    elevation: 10,
   },
   image: {
     flex: 1,
@@ -256,11 +268,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   profileText: {
-    fontSize: responsiveFontSize(4),
-    fontFamily: 'Rubik-Bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 1
+    fontSize: responsiveFontSize(3),
+    fontFamily: 'Rubik-Regular',
+  
   },
 });
 

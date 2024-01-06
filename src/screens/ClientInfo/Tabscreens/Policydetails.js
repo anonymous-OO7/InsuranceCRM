@@ -356,7 +356,7 @@ const Policydetails = props => {
                 setcurrentDatebox('inception');
                 showDatePicker();
               }}>
-              <Text>{policydata.inception_date}</Text>
+              <Text style={{fontFamily:"Rubik-Regular", color:Colors.textcolor}}>{policydata.inception_date}</Text>
             </TouchableOpacity>
 
             <Radiobutton
@@ -391,7 +391,7 @@ const Policydetails = props => {
                 setcurrentDatebox('duedate');
                 showDatePicker();
               }}>
-              <Text>{policydata.next_due_date}</Text>
+              <Text style={{fontFamily:"Rubik-Regular",color:Colors.textcolor}}>{policydata.next_due_date}</Text>
             </TouchableOpacity>
 
             <Text style={styles.headingText}>Maturity date</Text>
@@ -402,7 +402,7 @@ const Policydetails = props => {
                 setcurrentDatebox('maturity_date');
                 showDatePicker();
               }}>
-              <Text>{policydata.maturity_date}</Text>
+              <Text style={{fontFamily:"Rubik-Regular", color:Colors.textcolor}}>{policydata.maturity_date}</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -504,7 +504,7 @@ const Policydetails = props => {
           <View style={styles.view2}>
             <Button
               disabled={false}
-              btntext="Add new policy details"
+              btntext="Add policy"
               buttonctn={styles.buttonCtn}
               onclick={() => {
                 setaddPolicy(true);
@@ -525,7 +525,7 @@ const Policydetails = props => {
           <View style={styles.view2}>
             <Button
               disabled={false}
-              btntext="Add new policy details"
+              btntext="Add policy"
               buttonctn={styles.buttonCtn}
               onclick={() => {
                 setaddPolicy(true);
@@ -659,13 +659,28 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
   },
   headingText: {
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Light',
     color: 'black',
     backgroundColor: 'white',
     width: responsiveWidth(82),
     marginTop: responsiveHeight(3.7),
     marginLeft: responsiveWidth(4),
+  },
+  textInput: {
+    // marginTop: responsiveHeight(1),
+    height:responsiveHeight(5),
+    width: responsiveWidth(80),
+    borderBottomColor: 'white',
+    padding:0,
+    margin:0,
+    borderBottomWidth: 1,
+    marginBottom: responsiveHeight(1),
+    fontSize:responsiveFontSize(1.8),
+    borderBottomWidth: responsiveWidth(0.2),
+    borderBottomColor: Colors.textcolor,
+    color:"black",
+
   },
 });
 

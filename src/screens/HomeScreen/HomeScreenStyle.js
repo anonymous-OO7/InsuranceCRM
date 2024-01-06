@@ -147,6 +147,12 @@ HomeScreenStyle = StyleSheet.create({
           flex: 1,
           transform: [{scale: 1}],
         },
+        profileText: {
+          fontSize: responsiveFontSize(3),
+          fontFamily: 'Rubik-Regular',
+          color: 'white',
+      
+        },
 
        
  

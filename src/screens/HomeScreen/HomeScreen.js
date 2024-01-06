@@ -72,7 +72,6 @@ const HomeScreen = props => {
     }, [])
 );
 
- 
 
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
@@ -100,6 +99,45 @@ const HomeScreen = props => {
     }
   };
 
+  function getFirstAndLastCharacters(name) {
+
+    try {
+      const words = name.split(' ');
+      if (words.length === 1) {
+          return words[0][0].toUpperCase();
+      }
+      const firstChar = words[0][0].toUpperCase();
+      const lastChar = words[words.length - 1][0].toUpperCase();
+      return firstChar + lastChar;
+      
+    } catch (error) {
+      
+      console.log("EERO")
+    }
+  
+
+}
+
+const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
+
+console.log(namelogo,"AGENCYYY NAME")
+
+const getBackgroundColor = (status) => {
+  switch (status) {
+    case 'new_lead':
+      return '#E3CBCB';
+    case 'active':
+      return '#DCE5C2';
+    case 'in_progress':
+      return '#BCD7EB';
+    case 'cold_lead':
+      return '#DFCDE2';
+    default:
+      return 'gray'; // Default color if none of the conditions are met
+  }
+};
+
+
   return (
     <SafeAreaView style={HomeScreenStyle.container}>
       {/* <ScrollView automaticallyAdjustKeyboardInsets={true}> */}
@@ -111,12 +149,11 @@ const HomeScreen = props => {
               // props.props.navigation.dispatch(DrawerActions.openDrawer());
               props.props.navigation.openDrawer();
             }}
-            style={HomeScreenStyle.profileButton}>
-            <Image
-              style={HomeScreenStyle.image}
-              resizeMode="center"
-              source={require('../../assets/images/pImage.png')}
-            />
+            style={[HomeScreenStyle.profileButton,{ backgroundColor:   "#007FFF" }]}>
+          
+              <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={HomeScreenStyle.profileText}>{namelogo}</Text>
+        </View>
           </TouchableOpacity>
 
           <Text style={HomeScreenStyle.nameText}>{userInfo?.agency_name}</Text>

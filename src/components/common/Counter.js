@@ -15,7 +15,7 @@ import {
 import WatchlistIcon from '../../assets/images/tabbar/WatchlistIcon';
 import Watchlist from '../../assets/images/Watchlist.svg';
 import LogoViewer from './LogoViewer';
-import {WatchSvg} from '../../assets/svgs/SvgImages';
+import {WatchSvg,ClientSvg} from '../../assets/svgs/SvgImages';
 
 const Counter = ({
   disabled = true,
@@ -32,11 +32,18 @@ const Counter = ({
   return (
     <View style={[Counterstyles.container, buttonctn]}>
       <View>
-        <LogoViewer
+        {
+          counteractive == true ?   <LogoViewer
           Logosource={WatchSvg}
           containerstyle={[Counterstyles.logoImgContainer,{backgroundColor:buttonctn.backgroundColor}]}
           logostyle={ counteractive == true ?  Counterstyles.logoImg : Counterstyles.logoimg2}
-        />
+        /> :   <LogoViewer
+        Logosource={ClientSvg}
+        containerstyle={[Counterstyles.logoImgContainer,{backgroundColor:buttonctn.backgroundColor}]}
+        logostyle={ counteractive == true ?  Counterstyles.logoImg : Counterstyles.logoimg2}
+      />
+        }
+      
       </View>
 
       <View style={Counterstyles.textCtn}>

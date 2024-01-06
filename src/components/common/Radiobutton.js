@@ -112,14 +112,14 @@ const styles = StyleSheet.create({
 
   headingtext: {
     color: 'black',
-    fontSize: responsiveFontSize(2),
-    fontFamily: 'Rubik-Regular',
+    fontSize: responsiveFontSize(1.8),
+    fontFamily: 'Rubik-Light',
     marginBottom:responsiveHeight(1)
   },
   radiobtntext: {
     color: 'black',
     fontSize: responsiveFontSize(1.8),
-    fontFamily: 'Rubik-Regular',
+    fontFamily: 'Rubik-Light',
     marginLeft:responsiveWidth(1.5)
   },
 });

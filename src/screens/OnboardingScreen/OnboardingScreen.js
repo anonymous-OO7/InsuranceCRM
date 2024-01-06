@@ -125,7 +125,7 @@ const OnboardingScreen = (props, {navigation}) => {
           loading={loading}
         />
 
-        <View
+        {/* <View
           style={[OnboardingStyle.buttonCtn, {marginTop: responsiveHeight(7)}]}>
           <ButtonIcon
             disabled={false}
@@ -140,7 +140,7 @@ const OnboardingScreen = (props, {navigation}) => {
             Logosource={GoogleSvg}
             title={'Sign in with Apple'}
           />
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

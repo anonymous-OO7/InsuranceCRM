@@ -17,6 +17,8 @@ import {
 import SearchIcon from '../../assets/svgs/searchicon.svg';
 import ListView from '../../components/molecules/ListView';
 import { Colors } from '../../assets/colors';
+import TopBack from '../../components/molecules/TopBack';
+
 
 const SearchScreen = props => {
   console.log(props, 'Props in search scrren');
@@ -36,6 +38,7 @@ const SearchScreen = props => {
   return (
     <View style={styles.container}>
       <View style={styles.innerCtn}>
+        <TopBack  heading='Search' props={props}/>
         <View style={styles.searchSection}>
           <TextInput
             style={styles.searchInput}

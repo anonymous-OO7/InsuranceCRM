@@ -336,7 +336,7 @@ const Events = props => {
           <View style={styles.view2}>
             <Button
               disabled={false}
-              btntext="Add new Event details"
+              btntext="Add event"
               buttonctn={styles.buttonCtn}
               onclick={() => {
                 setaddPolicy(true);
@@ -357,7 +357,7 @@ const Events = props => {
           <View style={styles.view2}>
             <Button
               disabled={false}
-              btntext="Add new Event details"
+              btntext="Add event"
               buttonctn={styles.buttonCtn}
               onclick={() => {
                 setaddPolicy(true);
