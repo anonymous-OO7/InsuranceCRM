@@ -91,23 +91,27 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
               fontSize: responsiveFontSize(3),
               fontFamily: 'Poppins-Medium',
               marginBottom: 5,
+              textAlign:"center"
             }}>
            {userInfo?.agency_name}
           </Text>
           
           <Text
             style={{
-              color: Colors.black,
-              fontSize: responsiveFontSize(1.7),
+              color: Colors.text,
+              fontSize: responsiveFontSize(1.4),
               fontFamily:'Poppins-Medium',
+              textAlign:"center"
+
             }}>Phone no: {userInfo?.mobile}</Text>
           <Text
             style={{
-              color: Colors.black,
-              fontSize: responsiveFontSize(1.3),
+              color: Colors.text,
+              fontSize: responsiveFontSize(1.4),
               fontFamily:'Poppins-Medium',
+              textAlign:"center",
               marginBottom: 5,
-            }}>Email: {userInfo?.email}</Text>
+            }}>Email ID: {userInfo?.email}</Text>
       
           </View>
       
@@ -130,6 +134,7 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
                 fontSize: 15,
                 fontFamily: 'Roboto-Medium',
                 marginLeft: 5,
+                color:Colors.black
               }}>
               Tell a Friend
             </Text>
@@ -158,6 +163,8 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
                 fontSize: 15,
                 fontFamily: 'Roboto-Medium',
                 marginLeft: 5,
+                color:Colors.black
+
               }}>
               Sign Out
             </Text>

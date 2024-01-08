@@ -233,6 +233,8 @@ const AddClient = props => {
                 ]}
                 placeholderStyle={AddclientStyle.placeholderStyle}
                 selectedTextStyle={AddclientStyle.selectedTextStyle}
+                itemTextStyle={AddclientStyle.selectedTextStyle}
+
                 data={data}
                 maxHeight={300}
                 labelField="label"
@@ -245,7 +247,6 @@ const AddClient = props => {
                   setValue(item.value);
                   setIsFocus(false);
                 }}
-                itemTextStyle={{color: Colors.black}}
               />
               <HeadingBox
                 headingText="Client name"

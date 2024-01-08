@@ -160,7 +160,7 @@ const Events = props => {
 
       if (res != '' && res.status == 200) {
         if (res.data.data != null && res.data.data != undefined) {
-          setPolicyData(res.data.data);
+          // setPolicyData(res.data.data);
           setClientData(res.data.data);
         }
         // showToast(res?.data?.message);
@@ -197,7 +197,7 @@ const Events = props => {
                 setcurrentDatebox('date_of_event');
                 showDatePicker();
               }}>
-              <Text>{policydata.date_of_event}</Text>
+              <Text style={{ fontFamily:"Rubik-Regular",color:Colors.black}}>{policydata.date_of_event}</Text>
             </TouchableOpacity>
 
             <HeadingBox
@@ -406,6 +406,8 @@ const styles = StyleSheet.create({
     padding: responsiveWidth(1),
     paddingHorizontal: responsiveWidth(5),
     marginBottom: responsiveHeight(8),
+    width:windowWidth
+
   },
 
   headingboxctn: {
@@ -527,20 +529,29 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   placeholderStyle: {
-    fontSize: responsiveFontSize(2),
-    color: Colors.black,
+    fontFamily: 'Rubik-Regular',
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
+    backgroundColor:"white",
   },
   selectedTextStyle: {
-    fontSize: responsiveFontSize(2),
-    fontFamily: 'Rubik-Light',
-    color: Colors.black,
+    fontFamily: 'Rubik-Regular',
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
   },
-
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
-    color: Colors.black,
-  },
+    fontFamily: 'Rubik-Regular',
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
+    backgroundColor:"white",  },
   item: {
     backgroundColor: '#f9f9f9',
     padding: responsiveWidth(2),

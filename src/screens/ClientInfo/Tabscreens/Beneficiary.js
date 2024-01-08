@@ -14,18 +14,19 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import LottieView from 'lottie-react-native';
-
+import LogoViewer from '../../../components/common/LogoViewer';
+import { ComingSoon } from '../../../assets/svgs/SvgImages';
 const windowWidth = Dimensions.get('window').width;
 
 const Beneficiary = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <LottieView
-        style={styles.animationCtn}
-        source={require('../../../assets/animations/comingsoon.json')}
-        autoPlay
-        loop
-      />
+     
+          <LogoViewer
+      Logosource={ComingSoon}
+      containerstyle={styles.loginImgContainer}
+      logostyle={styles.loginImg}
+    />
     </SafeAreaView>
   );
 };
@@ -50,6 +51,16 @@ const styles = StyleSheet.create({
     width: windowWidth,
     backgroundColor: 'white',
     textAlign: 'center',
+  },
+  loginImgContainer:{
+    flex:1,
+    backgroundColor:"white",
+    alignItems:"center",
+    justifyContent:"center"
+  },
+  loginImg:{
+    height:responsiveHeight(31.7),
+    width:responsiveHeight(40.52),
   },
 });
 export default Beneficiary;

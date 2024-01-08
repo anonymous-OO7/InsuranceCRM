@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   nametext: {
     fontSize: responsiveFontSize(1.8),
-    fontFamily: 'Rubik-Regular',
+    fontFamily: 'Rubik-Medium',
     color: 'black',
   },
 

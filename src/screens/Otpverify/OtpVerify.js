@@ -147,6 +147,10 @@ const OtpVerify = props => {
               console.log(text, 'OTP TEXT');
               setOtp(text);
             }}
+            theme={{
+            
+              pinCodeTextStyle: styles.otpEntryText,
+             }}
           />
 
           <View style={styles.resendCtn}>
@@ -226,6 +230,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  otpEntryText: {
+    fontFamily: 'Rubik-Regular',
+    lineHeight: responsiveFontSize(3.4),
+    color: '#333333',
+    backgroundColor: "white",
+
   },
 });
 

@@ -62,7 +62,8 @@ OnboardingStyle = StyleSheet.create({
           buttonCtn:{
             marginLeft:responsiveWidth(8),
             width:responsiveWidth(80),
-            marginTop:responsiveHeight(1)
+            marginTop:responsiveHeight(1),
+            marginBottom:responsiveHeight(1)
 
           },
           submitButton: {

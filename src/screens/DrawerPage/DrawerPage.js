@@ -35,8 +35,10 @@ const DrawerPage = props => {
       drawerInactiveTintColor: '#333',
       drawerLabelStyle: {
         fontFamily: 'Roboto-Medium',
-        fontSize: 15,
+        fontSize: responsiveFontSize(2),
+        marginLeft:-responsiveWidth(5)
       },
+      
     }}
   >
     <Drawer.Screen 

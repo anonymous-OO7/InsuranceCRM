@@ -17,6 +17,9 @@ import {
 } from 'react-native-responsive-dimensions';
 import {BackSvg} from '../../assets/svgs/SvgImages';
 import LottieView from 'lottie-react-native';
+import LogoViewer from '../../../components/common/LogoViewer';
+import { ComingSoon } from '../../../assets/svgs/SvgImages';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -24,11 +27,11 @@ const windowHeight = Dimensions.get('window').height;
 const Transaction = () => {
   return (
     <SafeAreaView style={styles.container}>
-    <LottieView
-      style={styles.animationCtn}
-      source={require('../../../assets/animations/comingsoon.json')}
-      autoPlay
-      loop
+
+      <LogoViewer
+      Logosource={ComingSoon}
+      containerstyle={styles.loginImgContainer}
+      logostyle={styles.loginImg}
     />
   </SafeAreaView>
   )
@@ -56,6 +59,16 @@ const styles = StyleSheet.create({
     width: windowWidth,
     backgroundColor: 'white',
     textAlign: 'center',
+  },
+  loginImgContainer:{
+    flex:1,
+    backgroundColor:"white",
+    alignItems:"center",
+    justifyContent:"center"
+  },
+  loginImg:{
+    height:responsiveHeight(31.7),
+    width:responsiveHeight(40.52),
   },
 });
 export default Transaction

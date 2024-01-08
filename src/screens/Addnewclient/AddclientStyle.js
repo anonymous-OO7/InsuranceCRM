@@ -115,14 +115,17 @@ AddclientStyle = StyleSheet.create({
         
           },
           placeholderStyle: {
-            fontSize: responsiveFontSize(2),
-            color:Colors.black
-        
+            fontFamily: 'Rubik-Regular',
+            fontSize:responsiveFontSize(1.8),
+            lineHeight:responsiveFontSize(2),
+            color:"#333333",
+            backgroundColor:"white",
           },
           selectedTextStyle: {
-            fontSize: responsiveFontSize(2),
-            fontFamily: 'Rubik-Light',
-            color:Colors.black
+            fontFamily: 'Rubik-Regular',
+            fontSize:responsiveFontSize(1.8),
+            lineHeight:responsiveFontSize(2),
+            color:"#333333",
           },
        
           inputSearchStyle: {

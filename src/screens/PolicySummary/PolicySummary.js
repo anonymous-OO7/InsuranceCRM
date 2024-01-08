@@ -92,6 +92,14 @@ be evaluated before purchasing LIC's Bima Jyoti to ensure it aligns
 with your insurance objectives and requirements.
 `;
 
+const markdownStyles = {
+  text: {
+    color: 'black', // Set text color to black
+  },
+  // You can add styles for other markdown elements as needed
+};
+
+
   useEffect(() => {
     getsummary();
   }, []);
@@ -141,7 +149,7 @@ with your insurance objectives and requirements.
           
 
             <View style={{padding: 10}}>
-              <Markdown>
+            <Markdown style={markdownStyles}>
                 {/* {copy} */}
                 {policy?.summary1}
               </Markdown>

@@ -60,6 +60,7 @@ const InputBoxstyles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: responsiveHeight(1),
     fontSize:responsiveFontSize(1.8),
+    fontFamily:'Rubik-Regular',
     borderBottomWidth: responsiveWidth(0.2),
     borderBottomColor: Colors.textcolor,
     color:"black",

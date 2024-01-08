@@ -174,6 +174,7 @@ const PolicyCenter = props => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
+            itemTextStyle={styles.selectedTextStyle}
             data={companydata}
             search
             maxHeight={300}
@@ -185,16 +186,14 @@ const PolicyCenter = props => {
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-              setPolicynames([])
+              setPolicynames([]);
               setValue(item.value);
               setIsFocus(false);
             }}
           />
         )}
 
-        {policytypes.length == 0 ? (
-          null
-        ) : (
+        {policytypes.length == 0 ? null : (
           <>
             <Text style={styles.labelTxt}>Select product category</Text>
 
@@ -204,6 +203,8 @@ const PolicyCenter = props => {
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
+              itemTextStyle={styles.selectedTextStyle}
+
               data={policytypes}
               search
               maxHeight={300}
@@ -225,31 +226,27 @@ const PolicyCenter = props => {
           </>
         )}
 
+        {policynames.length > 0 ? (
+          <View>
+            <Text style={styles.labelTxt}>List of plans</Text>
 
-        {
-          policynames.length >0 ? <View>  
-          
-          <Text style={styles.labelTxt}>List of plans</Text>
-
-          <FlatList
-            data={policynames}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                onPress={() => {
-                  props.props.navigation.navigate('PolicySummary', {data: item});
-                }}
-                style={styles.buttonCtn}>
-                <Text style={styles.listText}>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-          /> 
+            <FlatList
+              data={policynames}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    props.props.navigation.navigate('PolicySummary', {
+                      data: item,
+                    });
+                  }}
+                  style={styles.buttonCtn}>
+                  <Text style={styles.listText}>{item.name}</Text>
+                </TouchableOpacity>
+              )}
+            />
           </View>
-
-          : null
-        }
-
-       
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -305,29 +302,36 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
-    backgroundColor:"white"
+    backgroundColor: 'white',
   },
   icon: {
     marginRight: 5,
   },
   label: {
     position: 'absolute',
-    backgroundColor: 'white',
     left: 22,
     top: 8,
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
+    fontFamily: 'Rubik-Regular',
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
+    backgroundColor:"white",
   },
   placeholderStyle: {
-    fontSize: 16,
     fontFamily: 'Rubik-Regular',
-
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
+    backgroundColor:"white",
   },
   selectedTextStyle: {
-    fontSize: 16,
     fontFamily: 'Rubik-Regular',
-
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
   },
   iconStyle: {
     width: 20,
@@ -335,14 +339,17 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
-  },
+    fontFamily: 'Rubik-Regular',
+    fontSize:responsiveFontSize(1.8),
+    lineHeight:responsiveFontSize(2),
+    color:"#333333",
+    backgroundColor:"white",  },
 
   buttonCtn: {
     paddingVertical: responsiveWidth(2),
     backgroundColor: 'white',
-    elevation:2,
-    marginVertical:responsiveWidth(1)
+    elevation: 2,
+    marginVertical: responsiveWidth(1),
   },
 });
 export default PolicyCenter;

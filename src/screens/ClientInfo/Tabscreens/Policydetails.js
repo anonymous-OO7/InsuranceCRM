@@ -356,7 +356,7 @@ const Policydetails = props => {
                 setcurrentDatebox('inception');
                 showDatePicker();
               }}>
-              <Text style={{fontFamily:"Rubik-Regular", color:Colors.textcolor}}>{policydata.inception_date}</Text>
+              <Text style={{fontFamily:"Rubik-Regular", color:Colors.black}}>{policydata.inception_date}</Text>
             </TouchableOpacity>
 
             <Radiobutton
@@ -391,7 +391,7 @@ const Policydetails = props => {
                 setcurrentDatebox('duedate');
                 showDatePicker();
               }}>
-              <Text style={{fontFamily:"Rubik-Regular",color:Colors.textcolor}}>{policydata.next_due_date}</Text>
+              <Text style={{fontFamily:"Rubik-Regular",color:Colors.black}}>{policydata.next_due_date}</Text>
             </TouchableOpacity>
 
             <Text style={styles.headingText}>Maturity date</Text>
@@ -402,7 +402,7 @@ const Policydetails = props => {
                 setcurrentDatebox('maturity_date');
                 showDatePicker();
               }}>
-              <Text style={{fontFamily:"Rubik-Regular", color:Colors.textcolor}}>{policydata.maturity_date}</Text>
+              <Text style={{fontFamily:"Rubik-Regular", color:Colors.black}}>{policydata.maturity_date}</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -574,6 +574,7 @@ const styles = StyleSheet.create({
     padding: responsiveWidth(1),
     paddingHorizontal: responsiveWidth(5),
     marginBottom: responsiveHeight(8),
+    width:windowWidth
   },
 
   headingboxctn: {
@@ -588,7 +589,7 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(2),
   },
   savebuttonCtn: {
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
   },
   containerouterlist: {
     backgroundColor: 'white',
@@ -610,6 +611,7 @@ const styles = StyleSheet.create({
     // Add padding, margin, etc., as needed for spacing and layout
   },
   policymainctn: {
+    display: 'flex',
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
