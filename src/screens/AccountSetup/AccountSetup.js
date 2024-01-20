@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, View,ToastAndroid} from 'react-native';
+import {SafeAreaView, ScrollView, View, ToastAndroid} from 'react-native';
 import AccountSetupStyle from './AccountSetupStyle';
 import HeadingDesc from '../../components/molecules/HeadingDesc';
 import HeadingBox from '../../components/molecules/HeadingBox';
@@ -14,40 +14,25 @@ import {jwtDecode} from 'jwt-decode';
 import {decode} from 'base-64';
 global.atob = decode;
 
-
-
-
-
-
 const AccountSetup = props => {
-
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
   };
- 
 
   const [userinfo, setUserinfo] = useState({});
-
 
   const loadUserInfo = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('userinfo');
 
-      console.log(jsonValue, 'USERINFO in account setup');
-
       if (jsonValue != null) {
         setUserinfo(JSON.parse(jsonValue));
       }
-
-   
     } catch (e) {
       // error reading value
       console.error(e);
     }
   };
-
 
   const updateUserdata = (key, value) => {
     setUserinfo(prevState => {
@@ -56,22 +41,17 @@ const AccountSetup = props => {
         [key]: value, // Update the specific key with the new value
       };
     });
-
-    console.log(userinfo, 'user DATAA');
   };
 
   const onPhoneChange = text => {
-    console.log('phone change! in account setup ' + text);
     updateUserdata('mobile', text);
   };
 
   const onNameChange = text => {
-    console.log('name change! in account setup ' + text);
     updateUserdata('name', text);
   };
 
   const onAgencyChange = text => {
-    console.log('name change! in account setup ' + text);
     updateUserdata('agency_name', text);
   };
 
@@ -79,20 +59,17 @@ const AccountSetup = props => {
     try {
       const jsonValue = JSON.stringify(userinfo);
       await AsyncStorage.setItem('userinfo', jsonValue);
-      console.log('Done and user data saved!! ');
       updateProfile();
     } catch (e) {
       // saving error
-      console.log('error occured!! ');
       console.log(e);
     }
   };
 
   const updateProfile = async () => {
-    console.log('CALLING update profile API');
     props.navigation.reset({
       index: 0,
-      routes: [{ name: 'DrawerPage' }],
+      routes: [{name: 'DrawerPage'}],
     });
     try {
       // Block of code to try
@@ -108,16 +85,10 @@ const AccountSetup = props => {
         endpoint,
       );
 
-      console.log('Response got in update  profile--> ', res.data);
-
       if (res != '' && res.status == 200) {
-        console.log("inside success 200 response");
-
         const decoded = jwtDecode(res?.data?.token);
 
-        console.log(decoded, 'DECODED IN UPDATE PROFILE TOKEN');
-        decoded["token"] = res?.data?.token ;
-
+        decoded['token'] = res?.data?.token;
 
         const jsonValue = JSON.stringify(decoded);
         await AsyncStorage.setItem('userinfo', jsonValue);
@@ -125,36 +96,26 @@ const AccountSetup = props => {
 
         showToast(res?.data?.message);
 
-
         props.navigation.reset({
           index: 0,
-          routes: [{ name: 'DrawerPage' }],
+          routes: [{name: 'DrawerPage'}],
         });
-      
       } else {
-        console.log("inside else sccount setup  of 200 response");
-        showToast("Some error occurred");
+        showToast('Some error occurred');
 
         // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast("Some error occurred");
+      showToast('Some error occurred');
 
       console.log(err, 'catch block of api');
     }
   };
 
   useEffect(() => {
-    console.log(userinfo, 'USEEFFECT UERS INF');
     loadUserInfo();
-
   }, []);
-
-
-
-
-
 
   return (
     <SafeAreaView style={AccountSetupStyle.container}>
@@ -176,7 +137,7 @@ const AccountSetup = props => {
             inputplaceholder={'Enter phone number'}
             onInputChange={onPhoneChange}
             containerstyle={AccountSetupStyle.fieldCtn}
-            keyboardtype='phone-pad'
+            keyboardtype="phone-pad"
           />
 
           <HeadingBox

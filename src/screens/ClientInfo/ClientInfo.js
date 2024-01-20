@@ -3,7 +3,6 @@ import {
   View,
   useWindowDimensions,
   StyleSheet,
-  Image,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -12,7 +11,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {TabView, TabBar} from 'react-native-tab-view';
 import {windowWidth} from '../../assets/utils/Dimensions';
 import {BackSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
@@ -24,6 +23,7 @@ import Beneficiary from './Tabscreens/Beneficiary';
 import {Colors} from '../../assets/colors';
 
 const ClientInfo = props => {
+
   const layout = useWindowDimensions();
 
   const {clientdata} = props.route.params;
@@ -31,7 +31,7 @@ const ClientInfo = props => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'first':
-        return <Clientdetails clientdata={clientdata} />;
+        return <Clientdetails props={props} clientdata={clientdata} />;
       case 'second':
         return <Policydetails clientdata={clientdata} />;
       case 'third':
@@ -61,7 +61,6 @@ const ClientInfo = props => {
       labelStyle={styles.label}
       scrollEnabled={true}
       tabStyle={styles.tab} // Add this line
-      // Add more customization here
     />
   );
 
@@ -104,7 +103,7 @@ const ClientInfo = props => {
     }
   };
 
-  const getBackgroundColor = (status) => {
+  const getBackgroundColor = status => {
     switch (status) {
       case 'new_lead':
         return '#E3CBCB';
@@ -122,15 +121,14 @@ const ClientInfo = props => {
   function getFirstAndLastCharacters(name) {
     const words = name.split(' ');
     if (words.length === 1) {
-        return words[0][0].toUpperCase();
+      return words[0][0].toUpperCase();
     }
     const firstChar = words[0][0].toUpperCase();
     const lastChar = words[words.length - 1][0].toUpperCase();
     return firstChar + lastChar;
-}
+  }
 
-  const namelogo = getFirstAndLastCharacters(clientdata?.name)
-
+  const namelogo = getFirstAndLastCharacters(clientdata?.name);
 
   return (
     <View style={styles.maincontainer}>
@@ -146,7 +144,11 @@ const ClientInfo = props => {
           />
         </TouchableOpacity>
         <View style={[styles.item]}>
-          <View style={[styles.profileButton,{ backgroundColor:   getBackgroundColor(clientdata?.status) }]}>
+          <View
+            style={[
+              styles.profileButton,
+              {backgroundColor: getBackgroundColor(clientdata?.status)},
+            ]}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Text style={styles.profileText}>{namelogo}</Text>
@@ -207,7 +209,6 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveHeight(6),
     borderRadius: responsiveHeight(6),
-    marginLeft: responsiveWidth(2),
   },
   image: {
     flex: 1,
@@ -270,7 +271,10 @@ const styles = StyleSheet.create({
   profileText: {
     fontSize: responsiveFontSize(3),
     fontFamily: 'Rubik-Regular',
-  
+  },
+  item: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

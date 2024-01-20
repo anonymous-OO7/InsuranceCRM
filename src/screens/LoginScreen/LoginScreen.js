@@ -1,21 +1,12 @@
-import React from "react";
-import { SafeAreaView , View,Text } from "react-native";
-
-
-
-
-
+import React from 'react';
+import {SafeAreaView, View, Text} from 'react-native';
 
 const LoginScreen = () => {
-
-
-  return(
+  return (
     <SafeAreaView>
       <Text>LoginScreen text</Text>
     </SafeAreaView>
-  )
-}
-
-
+  );
+};
 
 export default LoginScreen;

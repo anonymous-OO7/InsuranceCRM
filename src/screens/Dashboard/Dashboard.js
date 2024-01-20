@@ -1,21 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import React from 'react';
+import {Dimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../HomeScreen/HomeScreen';
-import AccountSetup from '../AccountSetup/AccountSetup';
 
 //screens
 
 //icons
 import HomeIcon from '../../assets/images/tabbar/HomeIcon';
-import PortfolioIcon from '../../assets/images/tabbar/PortfolioIcon';
 import WatchlistIcon from '../../assets/images/tabbar/WatchlistIcon';
 import BellIcon from '../../assets/images/tabbar/BellIcon';
 
 //active~
 import HomeActive from '../../assets/images/tabbar/homeActive.svg';
-import PortFolioActive from '../../assets/images/tabbar/portfolioActive.svg';
 import WatchlistActive from '../../assets/images/tabbar/watchlistActive.svg';
 import BellActive from '../../assets/images/tabbar/bellActive.svg';
 import Notification from '../../components/molecules/Notification';
@@ -52,9 +49,6 @@ const DashBoard = props => {
           },
         },
       }}>
-
-
-
       <Tab.Screen
         name="Home"
         children={() => <HomeScreen props={props} />}
@@ -68,20 +62,6 @@ const DashBoard = props => {
           },
         }}
       />
-
-      {/* <Tab.Screen
-        name="Portfolio"
-        children={() => <AccountSetup props={props} />}
-        options={{
-          tabBarIcon: ({focused}) => {
-            if (focused) {
-              return <PortFolioActive />;
-            } else {
-              return <PortfolioIcon />;
-            }
-          },
-        }}
-      /> */}
 
       <Tab.Screen
         name="HomeScreen"
@@ -109,9 +89,6 @@ const DashBoard = props => {
           },
         }}
       />
-
-
-
     </Tab.Navigator>
   );
 };

@@ -5,7 +5,6 @@ import {
   View,
   Text,
   ToastAndroid,
-  Image,
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
@@ -19,7 +18,6 @@ import LogoViewer from '../../components/common/LogoViewer';
 import {Upload} from '../../assets/svgs/SvgImages';
 import {axiosrequest} from '../../assets/utils/handler';
 import {Dropdown} from 'react-native-element-dropdown';
-import {Colors} from '../../assets/colors';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -39,24 +37,12 @@ const AddClient = props => {
   const [isFocus, setIsFocus] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const data = [
     {label: 'Active', value: 'active'},
     {label: 'New Lead', value: 'new_lead'},
     {label: 'In Progress', value: 'in_progress'},
     {label: 'Cold Lead', value: 'cold_lead'},
   ];
-
-  const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[AddclientStyle.label, isFocus && {color: 'blue'}]}>
-          Dropdown label
-        </Text>
-      );
-    }
-    return null;
-  };
 
   const [addsingle, setAddsingle] = useState(false);
   const [successAdd, setSuccessAdd] = useState(false);
@@ -98,9 +84,7 @@ const AddClient = props => {
   };
 
   const addnewclient = async () => {
-    console.log('ADDITION OF CLIENT!!');
-
-    setLoading(true)
+    setLoading(true);
 
     try {
       // Block of code to try
@@ -114,18 +98,15 @@ const AddClient = props => {
           age: parseInt(singleclient.age),
           profession: singleclient.profession,
           address: singleclient.address,
-          status : value
+          status: value,
         },
         endpoint,
       );
 
-      console.log('Response got in add cilient otp--> ', res?.data);
-      setLoading(false)
-
+      setLoading(false);
 
       if (res != '' && res.status == 200) {
         setSuccessAdd(true);
-        console.log(res.data.message);
         // props.navigation.navigate('OtpVerify', { email: email });
       } else {
         console.log(res.data.message);
@@ -142,41 +123,33 @@ const AddClient = props => {
       });
     } catch (err) {
       // Block of code to handle errors
-      setLoading(false)
+      setLoading(false);
 
       showToast('Some error occured');
-
-      console.log(err, 'catch block of api');
     }
   };
 
   const onNameChange = text => {
-    console.log('name change! in client setup ' + text);
     updateClientdata('name', text);
   };
 
   const onphoneChange = text => {
-    console.log('phone change! in client setup ' + text);
     updateClientdata('phone', text);
   };
 
   const onemailChange = text => {
-    console.log('emal change! in client setup ' + text);
     updateClientdata('email', text);
   };
 
   const onageChange = text => {
-    console.log('age change! in client setup ' + text);
     updateClientdata('age', text);
   };
 
   const onprofessionChange = text => {
-    console.log('profession change! in client setup ' + text);
     updateClientdata('profession', text);
   };
 
   const onaddressChange = text => {
-    console.log('address change! in client setup ' + text);
     updateClientdata('address', text);
   };
 
@@ -234,7 +207,6 @@ const AddClient = props => {
                 placeholderStyle={AddclientStyle.placeholderStyle}
                 selectedTextStyle={AddclientStyle.selectedTextStyle}
                 itemTextStyle={AddclientStyle.selectedTextStyle}
-
                 data={data}
                 maxHeight={300}
                 labelField="label"
@@ -380,7 +352,7 @@ const AddClient = props => {
               }
               btntext="Save"
               buttonctn={AddclientStyle.buttonCtn}
-              loading = {loading}
+              loading={loading}
               onclick={() => {
                 // setSuccessAdd(true);
                 addnewclient();

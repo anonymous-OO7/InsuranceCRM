@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Image,
   SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
@@ -18,13 +17,9 @@ import {
 } from 'react-native-responsive-dimensions';
 import {Dropdown} from 'react-native-element-dropdown';
 import {axiosrequest} from '../../assets/utils/handler';
-
-import {BackSvg} from '../../assets/svgs/SvgImages';
-import LottieView from 'lottie-react-native';
+import {Colors} from '../../assets/colors';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const fontScale = Dimensions.get('window').fontScale;
 
 const PolicyCenter = props => {
   const [value, setValue] = useState(null);
@@ -37,43 +32,31 @@ const PolicyCenter = props => {
   const [policytypes, setPolicytypes] = useState([]);
   const [policynames, setPolicynames] = useState([]);
 
-  const [policytypesdata, setPolicytypesdata] = useState([]);
-
   useEffect(() => {
     getAllCompanylist();
   }, []);
 
   useEffect(() => {
-    console.log('CALLING GETALL policy types');
     getAllPolicytypes();
   }, [value]);
 
   useEffect(() => {
-    console.log('CALLING GETALL PLAM LIST ');
     getAllPlanlist();
   }, [planValue]);
 
   const getAllCompanylist = async () => {
-    console.log('GET ALL COMPANY DATA');
     try {
       // Block of code to try
       let endpoint = `/companies`;
       const res = await axiosrequest('get', {}, endpoint);
-
-      console.log('Response got get all  companies --> ', res.data);
-
       if (res != '' && res.status == 200) {
         const transformedData = transformApiResponse(res?.data);
-
         setCompanydata(transformedData);
-
-        // showToast(res?.data?.message);
       } else {
         // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
-
       console.log(err, 'catch block of api');
     }
   };
@@ -90,25 +73,18 @@ const PolicyCenter = props => {
   }
 
   const getAllPolicytypes = async () => {
-    console.log('GET ALL POLICYT TYPES DATA');
     try {
       // Block of code to try
       let endpoint = `/policy-types`;
       const res = await axiosrequest('post', {company_name: value}, endpoint);
-
-      console.log('Response got get all  policy typess --> ', res.data);
-
       if (res != '' && res.status == 200) {
         const transformedData = transformPolicyResponse(res.data);
         setPolicytypes(transformedData);
-
-        // showToast(res?.data?.message);
       } else {
         // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
-
       console.log(err, 'catch block of api');
     }
   };
@@ -125,8 +101,6 @@ const PolicyCenter = props => {
   }
 
   const getAllPlanlist = async () => {
-    console.log('GET ALL PLAN DATA');
-
     try {
       // Block of code to try
       let endpoint = `/plans`;
@@ -135,25 +109,17 @@ const PolicyCenter = props => {
         {company_name: value, policy_type: planValue},
         endpoint,
       );
-
-      console.log('Response got get all  listttttttt plans  --> ', res.data);
-
       if (res != '' && res.status == 200) {
         const policyNames = res.data.data.map(item => ({
           id: item.policy_id,
           name: item.policy_name,
         }));
-
         setPolicynames(policyNames);
-        // const transformedData = transformPolicyResponse(res.data);
-        // setPolicytypes(transformedData)
-        // showToast(res?.data?.message);
       } else {
         // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
-
       console.log(err, 'catch block of api');
     }
   };
@@ -162,11 +128,12 @@ const PolicyCenter = props => {
     <SafeAreaView style={styles.container}>
       <View style={styles.innerCtn}>
         <Text style={styles.headingTxt}>Policy Center</Text>
-
         <Text style={styles.labelTxt}>Select insurance company</Text>
-
         {companydata.length == 0 ? (
-          <ActivityIndicator size="small" color="#0000ff" />
+          <View style={{marginTop:responsiveHeight(2)}}>
+                      <ActivityIndicator size="small" color={Colors.activeprimary} />
+
+            </View>
         ) : (
           <Dropdown
             style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
@@ -204,7 +171,6 @@ const PolicyCenter = props => {
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
               itemTextStyle={styles.selectedTextStyle}
-
               data={policytypes}
               search
               maxHeight={300}
@@ -216,7 +182,6 @@ const PolicyCenter = props => {
               onFocus={() => setIsPlanFocus(true)}
               onBlur={() => setIsPlanFocus(false)}
               onChange={item => {
-                console.log('CALLING ON CAHNGS');
                 setPlanValue(item.value);
                 setIsPlanFocus(false);
 
@@ -230,21 +195,29 @@ const PolicyCenter = props => {
           <View>
             <Text style={styles.labelTxt}>List of plans</Text>
 
-            <FlatList
-              data={policynames}
-              keyExtractor={item => item.id}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    props.props.navigation.navigate('PolicySummary', {
-                      data: item,
-                    });
-                  }}
-                  style={styles.buttonCtn}>
-                  <Text style={styles.listText}>{item.name}</Text>
-                </TouchableOpacity>
-              )}
-            />
+            <View style={styles.policyMainCtn}>
+              <FlatList
+                data={policynames}
+                keyExtractor={item => item.id}
+                renderItem={({item, index}) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      props.props.navigation.navigate('PolicySummary', {
+                        data: item,
+                      });
+                    }}
+                    style={[
+                      styles.buttonCtn,
+                      {
+                        backgroundColor:
+                          index % 2 == 0 ? Colors.darkBackground : Colors.white,
+                      },
+                    ]}>
+                    <Text style={styles.listText}>{item.name}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
           </View>
         ) : null}
       </View>
@@ -292,7 +265,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Rubik-Regular',
     color: 'black',
     width: windowWidth,
-    backgroundColor: 'white',
+    marginLeft: responsiveWidth(2),
   },
 
   //dropdown
@@ -315,23 +288,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     fontSize: 14,
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
-    backgroundColor:"white",
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
+    backgroundColor: 'white',
   },
   placeholderStyle: {
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
-    backgroundColor:"white",
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
+    backgroundColor: 'white',
   },
   selectedTextStyle: {
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
   },
   iconStyle: {
     width: 20,
@@ -340,16 +313,23 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
-    backgroundColor:"white",  },
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
+    backgroundColor: 'white',
+  },
 
   buttonCtn: {
-    paddingVertical: responsiveWidth(2),
+    paddingVertical: responsiveWidth(4),
+    maxHeight: responsiveHeight(20),
+  },
+  policyMainCtn: {
+    padding: responsiveWidth(2),
     backgroundColor: 'white',
-    elevation: 2,
+    elevation: 5,
     marginVertical: responsiveWidth(1),
+    borderRadius: responsiveWidth(4),
+    maxHeight: responsiveHeight(52),
   },
 });
 export default PolicyCenter;

@@ -12,11 +12,9 @@ import OtpVerify from '../screens/Otpverify/OtpVerify.js';
 import PolicySummary from '../screens/PolicySummary/PolicySummary.js';
 import SearchScreen from '../screens/SearchPage/SearchScreen.js';
 
-
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
-
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
@@ -31,8 +29,6 @@ const AppStack = () => {
       <Stack.Screen name="OtpVerify" component={OtpVerify} />
       <Stack.Screen name="PolicySummary" component={PolicySummary} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
-
-
     </Stack.Navigator>
   );
 };

@@ -1,32 +1,23 @@
 import React from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  SafeAreaView,
-} from 'react-native';
+import {StyleSheet, Dimensions, SafeAreaView} from 'react-native';
 
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import LottieView from 'lottie-react-native';
 import LogoViewer from '../../../components/common/LogoViewer';
-import { ComingSoon } from '../../../assets/svgs/SvgImages';
+import {ComingSoon} from '../../../assets/svgs/SvgImages';
 const windowWidth = Dimensions.get('window').width;
 
 const Beneficiary = () => {
   return (
     <SafeAreaView style={styles.container}>
-     
-          <LogoViewer
-      Logosource={ComingSoon}
-      containerstyle={styles.loginImgContainer}
-      logostyle={styles.loginImg}
-    />
+      <LogoViewer
+        Logosource={ComingSoon}
+        containerstyle={styles.loginImgContainer}
+        logostyle={styles.loginImg}
+      />
     </SafeAreaView>
   );
 };
@@ -52,15 +43,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     textAlign: 'center',
   },
-  loginImgContainer:{
-    flex:1,
-    backgroundColor:"white",
-    alignItems:"center",
-    justifyContent:"center"
+  loginImgContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  loginImg:{
-    height:responsiveHeight(31.7),
-    width:responsiveHeight(40.52),
+  loginImg: {
+    height: responsiveHeight(31.7),
+    width: responsiveHeight(40.52),
   },
 });
 export default Beneficiary;

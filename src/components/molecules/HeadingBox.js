@@ -20,7 +20,6 @@ const HeadingBox = ({
   inputplaceholder = 'box placeholder',
   containerstyle,
   onInputChange = text => {
-    console.log('Default On box texthandler  ' + text);
   },
   keyboardtype = 'default'
 }) => {

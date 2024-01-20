@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ToastAndroid,
+  Keyboard
 } from 'react-native';
 import {Colors} from '../../../assets/colors';
 import {EmptyDocSvg} from '../../../assets/svgs/SvgImages';
@@ -19,13 +20,10 @@ import {windowHeight, windowWidth} from '../../../assets/utils/Dimensions';
 import HeadingBox from '../../../components/molecules/HeadingBox';
 import Radiobutton from '../../../components/common/Radiobutton';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {axiosrequest} from '../../../assets/utils/handler';
 
 const Policydetails = props => {
-  // console.log(props.clientdata, 'CLIENT ALL got id policy derail page');
-
   const showToast = text => {
     ToastAndroid.show(text, ToastAndroid.SHORT);
   };
@@ -40,31 +38,43 @@ const Policydetails = props => {
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [currentDatebox, setcurrentDatebox] = useState('');
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => setKeyboardVisible(true),
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => setKeyboardVisible(false),
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const showDatePicker = () => {
-    console.log('opened date picker');
     setDatePickerVisibility(true);
   };
 
   const hideDatePicker = () => {
-    console.log('closed date picker');
     setDatePickerVisibility(false);
   };
 
   const handleConfirm = date => {
-    console.log('A date has been picked: ', date);
-    console.log(currentDatebox, 'CURRENTDATE');
     const dt = new Date(date);
     const x = dt.toISOString().split('T');
     const x1 = x[0].split('-');
     const d = x1[2] + '/' + x1[1] + '/' + x1[0];
-    console.log(d, 'CURRENTDATE stringg');
 
     if (currentDatebox == 'inception') {
       inceptiondate(d);
-    }else if(currentDatebox == 'maturity_date'){
-
-      maturitydate(d)
+    } else if (currentDatebox == 'maturity_date') {
+      maturitydate(d);
     } else {
       nextduedate(d);
     }
@@ -78,87 +88,12 @@ const Policydetails = props => {
     inception_date: 'Date',
     frequency: false,
     next_due_date: 'Date',
-    maturity_date:'Date'
+    maturity_date: 'Date',
   });
 
   useEffect(() => {
     getAllpolicy();
   }, []);
-
-  // const addPolicyData = () => {
-  //   if (
-  //     policydata.amount != 0 &&
-  //     policydata.name != '' &&
-  //     policydata.inception_date != '' &&
-  //     policydata.next_due_date != ''
-  //   ) {
-  //     console.log(
-  //       'Data of policy being added',
-  //       policydata.amount,
-  //       '--',
-  //       policydata.name,
-  //       '---',
-  //       policydata.inception_date,
-  //       '---',
-  //       policydata.next_due_date,
-  //       '---',
-  //       policydata.maturity_date,
-  //     );
-  //     setaddPolicy(!addpolicy);
-  //     // setClientData(prevDetails => [...prevDetails, policydata]);
-  //     addpolicydatabackend();
-  //     // updateClientPolicies();
-  //     setPolicyData({
-  //       name: '',
-  //       amount: 0,
-  //       status: false,
-  //       inception_date: 'Date',
-  //       frequency: false,
-  //       next_due_date: 'Date',
-  //       maturity_date:'Date'
-  //     });
-  //   } else {
-  //     showToast('Fill details first!!');
-  //   }
-  // };
-
-
-
-  const updateClientPolicies = async () => {
-    try {
-      // Retrieve the existing clients array from AsyncStorage
-      const existingClientsJson = await AsyncStorage.getItem('@clients_array');
-      let clientsArray = existingClientsJson
-        ? JSON.parse(existingClientsJson)
-        : [];
-      console.log('CLIENTS ARRAY', clientsArray);
-
-      // Find the index of the client to be updated
-      const clientIndex = clientsArray.findIndex(
-        client => client.clientname === props.clientdata.clientname,
-      );
-
-      if (clientIndex !== -1) {
-        console.log(clientIndex, 'INDEX FOUND!');
-        // Update the clientpolicies array for the specific client
-        clientsArray[clientIndex].clientpolicies = [
-          ...clientsArray[clientIndex].clientpolicies,
-          policydata,
-        ];
-
-        console.log(clientsArray, 'CLIENTS ARRAY AFTER INSERTING NET POLICY!');
-        // Save the updated array back to AsyncStorage
-        const updatedClientsJson = JSON.stringify(clientsArray);
-        await AsyncStorage.setItem('@clients_array', updatedClientsJson);
-
-        showToast('Policy added successfully!');
-      } else {
-        console.log('Client not found');
-      }
-    } catch (e) {
-      console.error('Error updating client policies', e);
-    }
-  };
 
   const updatePolicyData = (key, value) => {
     setPolicyData(prevState => {
@@ -167,64 +102,42 @@ const Policydetails = props => {
         [key]: value, // Update the specific key with the new value
       };
     });
-
   };
 
   const onproductNameChange = text => {
-    console.log(' product name change! in account setup ' + text);
     updatePolicyData('name', text);
   };
 
   const amountChange = text => {
-    console.log(' amount change ' + text);
     updatePolicyData('amount', text);
   };
 
   const inceptiondate = text => {
-    console.log(' inceptiondate change ' + text);
     updatePolicyData('inception_date', text);
   };
 
   const nextduedate = text => {
-    console.log(' nextduedate  changed' + text);
     updatePolicyData('next_due_date', text);
   };
 
   const maturitydate = text => {
-    console.log(' maturity  changed' + text);
     updatePolicyData('maturity_date', text);
   };
 
-
-
-
   const addpolicydatabackend = async () => {
-    console.log('ADD POLICY DATA');
     if (
-
-      policydata.amount && policydata.amount != 0 &&
-      policydata.name && policydata.name != '' &&
-      policydata.inception_date && policydata.inception_date != '' &&
-       policydata.next_due_date && policydata.next_due_date != '' && 
-       policydata.maturity_date && policydata.maturity_date != ''
-
+      policydata.amount &&
+      policydata.amount != 0 &&
+      policydata.name &&
+      policydata.name != '' &&
+      policydata.inception_date &&
+      policydata.inception_date != '' &&
+      policydata.next_due_date &&
+      policydata.next_due_date != '' &&
+      policydata.maturity_date &&
+      policydata.maturity_date != ''
     ) {
-
-          
       try {
-
-        console.log(
-          'Data of policy being added',
-          policydata.amount,
-          '--',
-          policydata.name,
-          '---',
-          policydata.inception_date,
-          '---',
-          policydata.next_due_date,
-          '---',
-          policydata.maturity_date,
-        );
         // Block of code to try
         let endpoint = `/policy`;
         const res = await axiosrequest(
@@ -237,16 +150,13 @@ const Policydetails = props => {
             frequency: policydata.frequency == true ? 'yearly' : 'monthly',
             next_due_date: policydata.next_due_date,
             client_id: props?.clientdata?.id,
-            maturity_date:policydata.maturity_date
+            maturity_date: policydata.maturity_date,
           },
           endpoint,
         );
-        // console.log('Response got in add single policy --> ', res);
         if (res != '' && res.status == 200) {
           setaddPolicy(!addpolicy);
           showToast('Policy added successfully!');
-          // showToast(res?.data?.message);
-          // props.navigation.navigate('OtpVerify', { email: email });
           setPolicyData({
             name: '',
             amount: 0,
@@ -254,7 +164,7 @@ const Policydetails = props => {
             inception_date: 'Date',
             frequency: false,
             next_due_date: 'Date',
-            maturity_date:'Date'
+            maturity_date: 'Date',
           });
           getAllpolicy();
         } else {
@@ -265,41 +175,29 @@ const Policydetails = props => {
         // Block of code to handle errors
 
         showToast('Some error occured');
-        console.log(err, 'catch block of api');
       }
     } else {
       showToast('Fill all fields!');
     }
   };
 
-
-
   const getAllpolicy = async () => {
-    console.log('GET ALL POLICY DATA');
     try {
       // Block of code to try
       let endpoint = `/policy/${props?.clientdata?.id}`;
       const res = await axiosrequest('get', {}, endpoint);
 
-      console.log('Response got get all  policy --> ', res.data);
-
       if (res != '' && res.status == 200) {
         if (res.data.data != null && res.data.data != undefined) {
           setPolicyData(res.data.data);
 
-          // setClientData(prevDetails => [...prevDetails, res.data.data]);
           setClientData(res.data.data);
         }
-        // showToast(res?.data?.message);
-        // props.navigation.navigate('OtpVerify', { email: email });
       } else {
-        // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
       showToast('Some error occured');
-
-      console.log(err, 'catch block of api');
     }
   };
 
@@ -341,13 +239,6 @@ const Policydetails = props => {
               }}
             />
 
-            {/* <HeadingBox
-              props={props}
-              headingText={'Inception date'}
-              inputplaceholder={'Date'}
-              onInputChange={inceptiondate}
-              containerstyle={styles.headingboxctn}
-            /> */}
             <Text style={styles.headingText}>Inception date</Text>
 
             <TouchableOpacity
@@ -356,7 +247,9 @@ const Policydetails = props => {
                 setcurrentDatebox('inception');
                 showDatePicker();
               }}>
-              <Text style={{fontFamily:"Rubik-Regular", color:Colors.black}}>{policydata.inception_date}</Text>
+              <Text style={{fontFamily: 'Rubik-Regular', color: Colors.black}}>
+                {policydata.inception_date}
+              </Text>
             </TouchableOpacity>
 
             <Radiobutton
@@ -377,21 +270,15 @@ const Policydetails = props => {
 
             <Text style={styles.headingText}>Next due date</Text>
 
-            {/* <HeadingBox
-              props={props}
-              headingText={'Next due date'}
-              inputplaceholder={'Date'}
-              onInputChange={nextduedate}
-              containerstyle={styles.headingboxctn}
-            /> */}
-
             <TouchableOpacity
               style={styles.dateBtn}
               onPress={() => {
                 setcurrentDatebox('duedate');
                 showDatePicker();
               }}>
-              <Text style={{fontFamily:"Rubik-Regular",color:Colors.black}}>{policydata.next_due_date}</Text>
+              <Text style={{fontFamily: 'Rubik-Regular', color: Colors.black}}>
+                {policydata.next_due_date}
+              </Text>
             </TouchableOpacity>
 
             <Text style={styles.headingText}>Maturity date</Text>
@@ -402,20 +289,21 @@ const Policydetails = props => {
                 setcurrentDatebox('maturity_date');
                 showDatePicker();
               }}>
-              <Text style={{fontFamily:"Rubik-Regular", color:Colors.black}}>{policydata.maturity_date}</Text>
+              <Text style={{fontFamily: 'Rubik-Regular', color: Colors.black}}>
+                {policydata.maturity_date}
+              </Text>
             </TouchableOpacity>
           </ScrollView>
 
-          <View style={styles.view2}>
-            {/* <Button
-              disabled={false}
-              btntext="Add new policy details"
-              buttonctn={styles.buttonCtn}
-            /> */}
+          <View style={[styles.view2,{
+            marginBottom: keyboardVisible
+              ? responsiveHeight(0)
+              : responsiveHeight(8),
+          },]}>
             <SaveCancelBtn
               onSave={() => {
                 // addPolicyData();
-                addpolicydatabackend()
+                addpolicydatabackend();
               }}
               buttonctn={styles.savebuttonCtn}
               onCancel={() => {
@@ -430,13 +318,9 @@ const Policydetails = props => {
           <View style={{flex: 1}}>
             <ScrollView showsVerticalScrollIndicator={false}>
               {clientData.map((item, index) => {
-                console.log(item, 'ITEM', index, 'INDEX');
-
                 return (
                   <View key={index} style={styles.containerouterlist}>
                     <View style={styles.containerlist}>
-                      {/* Repeat this item to see the two-column layout */}
-
                       <View style={styles.ctn1}>
                         <Text style={styles.listheadtext}>
                           Policy Holder name
@@ -492,8 +376,6 @@ const Policydetails = props => {
                           </View>
                         </TouchableOpacity>
                       </View>
-
-                      {/* Add more items as needed */}
                     </View>
                   </View>
                 );
@@ -574,7 +456,7 @@ const styles = StyleSheet.create({
     padding: responsiveWidth(1),
     paddingHorizontal: responsiveWidth(5),
     marginBottom: responsiveHeight(8),
-    width:windowWidth
+    width: windowWidth,
   },
 
   headingboxctn: {
@@ -607,8 +489,6 @@ const styles = StyleSheet.create({
   },
   item: {
     flexBasis: '40%',
-    // You can also use width: '50%' instead of flexBasis
-    // Add padding, margin, etc., as needed for spacing and layout
   },
   policymainctn: {
     display: 'flex',
@@ -671,18 +551,17 @@ const styles = StyleSheet.create({
   },
   textInput: {
     // marginTop: responsiveHeight(1),
-    height:responsiveHeight(5),
+    height: responsiveHeight(5),
     width: responsiveWidth(80),
     borderBottomColor: 'white',
-    padding:0,
-    margin:0,
+    padding: 0,
+    margin: 0,
     borderBottomWidth: 1,
     marginBottom: responsiveHeight(1),
-    fontSize:responsiveFontSize(1.8),
+    fontSize: responsiveFontSize(1.8),
     borderBottomWidth: responsiveWidth(0.2),
     borderBottomColor: Colors.textcolor,
-    color:"black",
-
+    color: 'black',
   },
 });
 

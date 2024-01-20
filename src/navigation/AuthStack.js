@@ -12,17 +12,12 @@ import DrawerPage from '../screens/DrawerPage/DrawerPage.js';
 import PolicySummary from '../screens/PolicySummary/PolicySummary.js';
 import SearchScreen from '../screens/SearchPage/SearchScreen.js';
 
-
-
-
-
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
-
-
   return (
-    <Stack.Navigator screenOptions={{headerShown: false,animation: 'slide_from_right'}}>
+    <Stack.Navigator
+      screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -34,13 +29,6 @@ const AuthStack = () => {
       <Stack.Screen name="DrawerPage" component={DrawerPage} />
       <Stack.Screen name="PolicySummary" component={PolicySummary} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
-
-
-
-      
-
-
-
     </Stack.Navigator>
   );
 };

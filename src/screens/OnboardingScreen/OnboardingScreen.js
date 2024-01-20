@@ -1,32 +1,18 @@
 import React, {useState, useRef} from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  ToastAndroid,
-  Dimensions,
-} from 'react-native';
+import {SafeAreaView, View, Text, ScrollView} from 'react-native';
 import OnboardingStyle from './OnboardingStyle';
-
 import LogoViewer from '../../components/common/LogoViewer';
 import {axiosrequest} from '../../assets/utils/handler';
-import {
-  AppleSvg,
-  GoogleSvg,
-  LoginImage,
-  LogoImage,
-} from '../../assets/svgs/SvgImages';
+import {LoginImage, LogoImage} from '../../assets/svgs/SvgImages';
 import Button from '../../components/common/Button';
-import ButtonIcon from '../../components/common/ButtonIcon';
 import InputBox from '../../components/common/InputBox';
 import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {showToast} from '../../assets/utils/Helpers';
-const {width, height} = Dimensions.get('window');
+import Toast from 'react-native-toast-message';
+
 
 const OnboardingScreen = (props, {navigation}) => {
   const [email, setEmail] = useState('');
@@ -34,24 +20,17 @@ const OnboardingScreen = (props, {navigation}) => {
   const [loading, setLoading] = useState(false);
   const scrollViewRef = useRef(null);
   const emailTextHandler = text => {
-    console.log('EMAIL TEXT HANDLER' + text);
-
     // setEmail(text);
-
     const isEmail = validateEmail(text);
-
     if (isEmail == true) {
-      console.log('email if in correct format');
       setEmail(text);
       setValid(true);
     } else {
       setValid(false);
-      console.log('email if in not in  correct format');
     }
   };
 
   const onfocus = () => {
-    console.log('ONFOCUS HANDLER', scrollViewRef);
     scrollViewRef.current?.scrollTo({y: 500, animated: true});
   };
 
@@ -60,32 +39,34 @@ const OnboardingScreen = (props, {navigation}) => {
     return regex.test(email);
   }
 
+  const showToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Hello',
+      text2: 'This is some something 👋'
+    });
+  }
   const callOtp = async () => {
-    // props.navigation.navigate('OtpVerify', {email: email});
 
-    console.log('CALLING OTP API');
-    setLoading(true)
 
+    setLoading(true);
     try {
       // Block of code to try
       let endpoint = `/login`;
       const res = await axiosrequest('post', {email: email}, endpoint);
-      setLoading(false)
-
-      console.log('Response got in email otp--> ', res);
+      setLoading(false);
 
       if (res != '' && res.status == 200) {
         showToast(res?.data?.message);
         props.navigation.navigate('OtpVerify', {email: email});
+        showToast()
+
       } else {
-        // showToast(res?.data?.message);
         showToast('Some error occured');
       }
     } catch (err) {
       // Block of code to handle errors
       showToast('Some error occured');
-
-      console.log(err, 'catch block of api');
     }
   };
 
@@ -119,7 +100,6 @@ const OnboardingScreen = (props, {navigation}) => {
           disabled={email != '' && isValid == true ? false : true}
           onclick={() => {
             callOtp();
-            // props.navigation.navigate('AccountSetup');
           }}
           buttonctn={OnboardingStyle.buttonCtn}
           loading={loading}
@@ -142,6 +122,8 @@ const OnboardingScreen = (props, {navigation}) => {
           />
         </View> */}
       </ScrollView>
+      <Toast />
+
     </SafeAreaView>
   );
 };

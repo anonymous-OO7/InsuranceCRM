@@ -94,14 +94,11 @@ const ListView = ({props, data}) => {
   
   const name = "Gaurav Yadav";
   const initials = getFirstAndLastCharacters(name); // This will be 'GY'
-  console.log(initials);
 
   console.log(data, 'Data got in component');
 
   const renderItem = ({item}) => {
 
-    console.log(item ,"ITEM")
-    console.log(item?.name.split(' ').map(word => word[0]).join(''))
     const namelogo = getFirstAndLastCharacters(item?.name)
 
 

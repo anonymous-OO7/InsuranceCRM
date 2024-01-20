@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ToastAndroid,
+  Keyboard
 } from 'react-native';
 import {Colors} from '../../../assets/colors';
 import {EmptyDocSvg} from '../../../assets/svgs/SvgImages';
@@ -19,13 +20,11 @@ import {windowHeight, windowWidth} from '../../../assets/utils/Dimensions';
 import HeadingBox from '../../../components/molecules/HeadingBox';
 import Radiobutton from '../../../components/common/Radiobutton';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {axiosrequest} from '../../../assets/utils/handler';
 import {Dropdown} from 'react-native-element-dropdown';
 
 const Events = props => {
-
   const showToast = text => {
     ToastAndroid.show(text, ToastAndroid.SHORT);
   };
@@ -33,13 +32,30 @@ const Events = props => {
   const [addpolicy, setaddPolicy] = useState(false);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const [clientData, setClientData] = useState(
-    // props.clientdata?.clientpolicies,
-    [],
-  );
+  const [clientData, setClientData] = useState([]);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [currentDatebox, setcurrentDatebox] = useState('');
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+
+
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => setKeyboardVisible(true),
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => setKeyboardVisible(false),
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const data = [
     {label: 'Birthday', value: 'birthday'},
@@ -94,15 +110,6 @@ const Events = props => {
   };
 
   const addpolicydatabackend = async () => {
-    console.log(
-      'ADD EVENT DATA',
-      policydata.date_of_event,
-      '--',
-      value,
-      '---',
-      policydata.description,
-    );
-
     if (
       policydata.date_of_event &&
       policydata.date_of_event != 0 &&
@@ -123,12 +130,9 @@ const Events = props => {
           },
           endpoint,
         );
-        console.log('Response got in add evebt --> ', res);
         if (res != '' && res.status == 200) {
           setaddPolicy(!addpolicy);
           showToast('Event added successfully!');
-          // showToast(res?.data?.message);
-          // props.navigation.navigate('OtpVerify', { email: email });
           setPolicyData({
             description: '',
             event_type: '',
@@ -137,13 +141,11 @@ const Events = props => {
           getAllpolicy();
         } else {
           showToast(res?.data?.message);
-          // showToast(res?.data?.message);
         }
       } catch (err) {
         // Block of code to handle errors
 
         showToast('Some error occured');
-        console.log(err, 'catch block of api');
       }
     } else {
       showToast('Fill all fields!');
@@ -156,33 +158,18 @@ const Events = props => {
       let endpoint = `/event/${props?.clientdata?.id}`;
       const res = await axiosrequest('get', {}, endpoint);
 
-      // console.log('Response got get all  evebts --> ', res.data);
-
       if (res != '' && res.status == 200) {
         if (res.data.data != null && res.data.data != undefined) {
-          // setPolicyData(res.data.data);
           setClientData(res.data.data);
         }
-        // showToast(res?.data?.message);
-        // props.navigation.navigate('OtpVerify', { email: email });
       } else {
         // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
       showToast('Some error occured');
-
-      console.log(err, 'catch block of api');
     }
   };
-
-  const renderItem = ({item}) => (
-    <View style={styles.item}>
-      <Text style={styles.description}>{item.description}</Text>
-      <Text style={styles.detail}>Event Type: {item.event_type}</Text>
-      <Text style={styles.detail}>Date of Event: {item.date_of_event}</Text>
-    </View>
-  );
 
   return (
     <View style={styles.maincontainer}>
@@ -197,7 +184,9 @@ const Events = props => {
                 setcurrentDatebox('date_of_event');
                 showDatePicker();
               }}>
-              <Text style={{ fontFamily:"Rubik-Regular",color:Colors.black}}>{policydata.date_of_event}</Text>
+              <Text style={{fontFamily: 'Rubik-Regular', color: Colors.black}}>
+                {policydata.date_of_event}
+              </Text>
             </TouchableOpacity>
 
             <HeadingBox
@@ -228,7 +217,11 @@ const Events = props => {
             />
           </ScrollView>
 
-          <View style={styles.view2}>
+          <View style={[styles.view2, {
+            marginBottom: keyboardVisible
+              ? responsiveHeight(0)
+              : responsiveHeight(8),
+          },]}>
             <SaveCancelBtn
               onSave={() => {
                 // addPolicyData();
@@ -247,85 +240,24 @@ const Events = props => {
           <View style={{flex: 1}}>
             <ScrollView showsVerticalScrollIndicator={false}>
               {clientData.map((item, index) => {
-                console.log(item, 'ITEM', index, 'INDEX');
-
                 return (
                   <View key={index} style={styles.containerouterlist}>
                     <View style={styles.containerlist}>
                       {/* Repeat this item to see the two-column layout */}
 
                       <View style={styles.item}>
-
-                      <Text style={styles.detail}>
+                        <Text style={styles.detail}>
                           Event Type: {item.event_type}
                         </Text>
 
                         <Text style={styles.description}>
                           {item.description}
                         </Text>
-                      
+
                         <Text style={styles.description}>
                           Date: {item.date_of_event}
                         </Text>
                       </View>
-
-                      {/* <View style={styles.ctn1}>
-                        <Text style={styles.listheadtext}>
-                          Policy Holder name
-                        </Text>
-                        <Text style={styles.listvaltext}>{item.name}</Text>
-
-                        <Text style={styles.listheadtext}>Product name</Text>
-                        <Text style={styles.listvaltext}>{item.name}</Text>
-
-                        <Text style={styles.listheadtext}>Inception date</Text>
-                        <Text style={styles.listvaltext}>
-                          {item.inception_date}
-                        </Text>
-
-                        <Text style={styles.listheadtext}>Next due date</Text>
-                        <Text style={styles.statustext}>
-                          {item.next_due_date}
-                        </Text>
-
-                        <TouchableOpacity>
-                          <View style={{alignSelf: 'center'}}>
-                            <Text style={styles.sendTxt}>
-                              Send policy discription
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-
-                      <View style={styles.ctn2}>
-                        <Text style={styles.listheadtext}>Current Status</Text>
-                        <Text style={styles.statustext}>{`${
-                          item.status ? 'Active' : 'Inactive'
-                        }`}</Text>
-
-                        <Text style={styles.listheadtext}>Proposed amount</Text>
-                        <Text style={styles.listvaltext}>₹{item.amount}</Text>
-
-                        <Text style={styles.listheadtext}>
-                          Premium frequency
-                        </Text>
-                        <Text style={styles.statustext}>{`${
-                          item.frequency ? 'Yearly' : 'Monthly'
-                        }`}</Text>
-
-                        <Text style={styles.listheadtext}>Maturity Date</Text>
-                        <Text style={styles.listvaltext}>
-                          {item.maturity_date}
-                        </Text>
-
-                        <TouchableOpacity>
-                          <View style={{alignSelf: 'center'}}>
-                            <Text style={styles.sendTxt}>Edit details</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View> */}
-
-                      {/* Add more items as needed */}
                     </View>
                   </View>
                 );
@@ -406,8 +338,7 @@ const styles = StyleSheet.create({
     padding: responsiveWidth(1),
     paddingHorizontal: responsiveWidth(5),
     marginBottom: responsiveHeight(8),
-    width:windowWidth
-
+    width: windowWidth,
   },
 
   headingboxctn: {
@@ -437,11 +368,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: responsiveHeight(2),
-
   },
   item: {
     flexBasis: '40%',
-    backgroundColor:"white"
+    backgroundColor: 'white',
     // You can also use width: '50%' instead of flexBasis
     // Add padding, margin, etc., as needed for spacing and layout
   },
@@ -530,16 +460,16 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
-    backgroundColor:"white",
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
+    backgroundColor: 'white',
   },
   selectedTextStyle: {
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
   },
   iconStyle: {
     width: 20,
@@ -548,30 +478,31 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontFamily: 'Rubik-Regular',
-    fontSize:responsiveFontSize(1.8),
-    lineHeight:responsiveFontSize(2),
-    color:"#333333",
-    backgroundColor:"white",  },
+    fontSize: responsiveFontSize(1.8),
+    lineHeight: responsiveFontSize(2),
+    color: '#333333',
+    backgroundColor: 'white',
+  },
   item: {
     backgroundColor: '#f9f9f9',
     padding: responsiveWidth(2),
     marginVertical: 8,
     marginHorizontal: responsiveWidth(2),
-    backgroundColor:"white",
-    width:responsiveWidth(70)
-},
-description: {
-  fontSize: responsiveFontSize(1.8),
-  fontFamily: 'Rubik-Light',
-  color: Colors.black,
-  marginBottom:responsiveHeight(1)
-},
-detail: {
+    backgroundColor: 'white',
+    width: responsiveWidth(70),
+  },
+  description: {
+    fontSize: responsiveFontSize(1.8),
+    fontFamily: 'Rubik-Light',
+    color: Colors.black,
+    marginBottom: responsiveHeight(1),
+  },
+  detail: {
     fontSize: responsiveFontSize(2),
     fontFamily: 'Rubik-Regular',
     color: Colors.black,
-    marginBottom:responsiveHeight(1)
-},
+    marginBottom: responsiveHeight(1),
+  },
 });
 
 export default Events;

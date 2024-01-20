@@ -12,8 +12,6 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { AuthContext } from '../../setup/app-context-manager/Authcontext';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LogoViewer from '../common/LogoViewer';
 import { windowWidth } from '../../assets/utils/Dimensions';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -32,7 +30,6 @@ const CustomDrawer = props => {
   const loadUserInfo = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('userinfo');
-      console.log(jsonValue, 'USERINFO');
       if (jsonValue != null) {
         setUserInfo(JSON.parse(jsonValue));
       }
@@ -103,7 +100,7 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
               fontFamily:'Poppins-Medium',
               textAlign:"center"
 
-            }}>Phone no: {userInfo?.mobile}</Text>
+            }}>{userInfo?.mobile}</Text>
           <Text
             style={{
               color: Colors.text,
@@ -111,7 +108,7 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
               fontFamily:'Poppins-Medium',
               textAlign:"center",
               marginBottom: 5,
-            }}>Email ID: {userInfo?.email}</Text>
+            }}>{userInfo?.email}</Text>
       
           </View>
       
