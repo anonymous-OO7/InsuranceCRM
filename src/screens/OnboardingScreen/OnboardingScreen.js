@@ -13,7 +13,6 @@ import {
 import {showToast} from '../../assets/utils/Helpers';
 import Toast from 'react-native-toast-message';
 
-
 const OnboardingScreen = (props, {navigation}) => {
   const [email, setEmail] = useState('');
   const [isValid, setValid] = useState(false);
@@ -43,12 +42,10 @@ const OnboardingScreen = (props, {navigation}) => {
     Toast.show({
       type: 'error',
       text1: 'Hello',
-      text2: 'This is some something 👋'
+      text2: 'This is some something 👋',
     });
-  }
+  };
   const callOtp = async () => {
-
-
     setLoading(true);
     try {
       // Block of code to try
@@ -59,8 +56,7 @@ const OnboardingScreen = (props, {navigation}) => {
       if (res != '' && res.status == 200) {
         showToast(res?.data?.message);
         props.navigation.navigate('OtpVerify', {email: email});
-        showToast()
-
+        showToast();
       } else {
         showToast('Some error occured');
       }
@@ -123,7 +119,6 @@ const OnboardingScreen = (props, {navigation}) => {
         </View> */}
       </ScrollView>
       <Toast />
-
     </SafeAreaView>
   );
 };

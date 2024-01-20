@@ -1,4 +1,3 @@
-import * as actionCreators from "./fund";
-
+import * as actionCreators from './fund';
 
 export {actionCreators};

@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ToastAndroid,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import {Colors} from '../../../assets/colors';
 import {EmptyDocSvg} from '../../../assets/svgs/SvgImages';
@@ -37,9 +37,6 @@ const Events = props => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [currentDatebox, setcurrentDatebox] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-
-
-
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -217,11 +214,15 @@ const Events = props => {
             />
           </ScrollView>
 
-          <View style={[styles.view2, {
-            marginBottom: keyboardVisible
-              ? responsiveHeight(0)
-              : responsiveHeight(8),
-          },]}>
+          <View
+            style={[
+              styles.view2,
+              {
+                marginBottom: keyboardVisible
+                  ? responsiveHeight(0)
+                  : responsiveHeight(8),
+              },
+            ]}>
             <SaveCancelBtn
               onSave={() => {
                 // addPolicyData();

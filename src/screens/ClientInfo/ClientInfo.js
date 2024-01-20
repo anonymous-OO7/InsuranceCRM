@@ -23,7 +23,6 @@ import Beneficiary from './Tabscreens/Beneficiary';
 import {Colors} from '../../assets/colors';
 
 const ClientInfo = props => {
-
   const layout = useWindowDimensions();
 
   const {clientdata} = props.route.params;

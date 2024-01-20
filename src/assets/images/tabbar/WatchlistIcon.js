@@ -1,19 +1,16 @@
 import React from 'react';
 
+import Svg, {Path, G} from 'react-native-svg';
 
-import Svg , {Path,G} from 'react-native-svg';
-
-const WatchlistIcon = (props) =>{
-
-    return(
-      <Svg
+const WatchlistIcon = props => {
+  return (
+    <Svg
       width={62}
       height={46}
       viewBox="0 0 62 46"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+      {...props}>
       <Path
         d="M24.25 8h-4.5a.75.75 0 01-.75-.75V5c0-1.655 1.346-3 3-3s3 1.345 3 3v2.25a.75.75 0 01-.75.75zM20.5 6.5h3V5c0-.827-.673-1.5-1.5-1.5s-1.5.673-1.5 1.5v1.5zM39.25 21.5a.75.75 0 01-.75-.75V5c0-.827-.673-1.5-1.5-1.5A.75.75 0 1137 2c1.654 0 3 1.345 3 3v15.75a.75.75 0 01-.75.75zM26.5 26c-1.654 0-3-1.346-3-3v-2.25a.75.75 0 111.5 0V23c0 .827.673 1.5 1.5 1.5S28 23.827 28 23v-2.25a.75.75 0 111.5 0V23c0 1.654-1.346 3-3 3zM40 26a.75.75 0 110-1.5c.827 0 1.5-.673 1.5-1.5v-2.25a.75.75 0 111.5 0V23c0 1.654-1.346 3-3 3z"
         fill="#666"
@@ -27,8 +24,7 @@ const WatchlistIcon = (props) =>{
         fill="#333"
       />
     </Svg>
-
-    )
-}; 
+  );
+};
 
 export default WatchlistIcon;

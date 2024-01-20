@@ -1,12 +1,10 @@
-import {createStore,combineReducers} from 'redux';
+import {createStore, combineReducers} from 'redux';
 import fundReducer from './reducers/Reducer';
 
 const rootReducer = combineReducers({
-    fund: fundReducer
-})
+  fund: fundReducer,
+});
 
-const configureStore = () => createStore(rootReducer,{});
-
-
+const configureStore = () => createStore(rootReducer, {});
 
 export default configureStore;

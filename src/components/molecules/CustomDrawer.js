@@ -1,29 +1,30 @@
-import React,{useEffect,useState,useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   View,
   Text,
   ImageBackground,
   Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { AuthContext } from '../../setup/app-context-manager/Authcontext';
+import {AuthContext} from '../../setup/app-context-manager/Authcontext';
 import LogoViewer from '../common/LogoViewer';
-import { windowWidth } from '../../assets/utils/Dimensions';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { Colors } from '../../assets/colors';
-import { Logout, Share } from '../../assets/svgs/SvgImages';
+import {windowWidth} from '../../assets/utils/Dimensions';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {Colors} from '../../assets/colors';
+import {Logout, Share} from '../../assets/svgs/SvgImages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const CustomDrawer = props => {
-  const {logout}  = useContext(AuthContext);
-
+  const {logout} = useContext(AuthContext);
 
   const [userInfo, setUserInfo] = useState(null);
 
@@ -44,26 +45,20 @@ const CustomDrawer = props => {
   }, []);
 
   function getFirstAndLastCharacters(name) {
-
     try {
       const words = name.split(' ');
       if (words.length === 1) {
-          return words[0][0].toUpperCase();
+        return words[0][0].toUpperCase();
       }
       const firstChar = words[0][0].toUpperCase();
       const lastChar = words[words.length - 1][0].toUpperCase();
       return firstChar + lastChar;
-      
     } catch (error) {
-      
-      console.log("EERO")
+      console.log('EERO');
     }
-  
+  }
 
-}
-
-const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
-
+  const namelogo = getFirstAndLastCharacters(userInfo?.agency_name);
 
   return (
     <View style={{flex: 1}}>
@@ -78,40 +73,49 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
             style={{height: 90, width: 80, borderRadius: 40, marginBottom: 10}}
           /> */}
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View
+              style={{
+                backgroundColor: '#007FFF',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: responsiveHeight(10),
+                width: responsiveHeight(10),
+                borderRadius: responsiveHeight(8),
+                marginBottom: 10,
+              }}>
+              <Text style={styles.profileText}>{namelogo}</Text>
+            </View>
+            <Text
+              style={{
+                color: Colors.black,
+                fontSize: responsiveFontSize(3),
+                fontFamily: 'Poppins-Medium',
+                marginBottom: 5,
+                textAlign: 'center',
+              }}>
+              {userInfo?.agency_name}
+            </Text>
 
-           <View style={{backgroundColor:"#007FFF",justifyContent: 'center', alignItems: 'center',height: responsiveHeight(10), width: responsiveHeight(10), borderRadius: responsiveHeight(8), marginBottom: 10}}>
-           <Text style={styles.profileText}>{namelogo}</Text>
+            <Text
+              style={{
+                color: Colors.text,
+                fontSize: responsiveFontSize(1.4),
+                fontFamily: 'Poppins-Medium',
+                textAlign: 'center',
+              }}>
+              {userInfo?.mobile}
+            </Text>
+            <Text
+              style={{
+                color: Colors.text,
+                fontSize: responsiveFontSize(1.4),
+                fontFamily: 'Poppins-Medium',
+                textAlign: 'center',
+                marginBottom: 5,
+              }}>
+              {userInfo?.email}
+            </Text>
           </View>
-          <Text
-            style={{
-              color: Colors.black,
-              fontSize: responsiveFontSize(3),
-              fontFamily: 'Poppins-Medium',
-              marginBottom: 5,
-              textAlign:"center"
-            }}>
-           {userInfo?.agency_name}
-          </Text>
-          
-          <Text
-            style={{
-              color: Colors.text,
-              fontSize: responsiveFontSize(1.4),
-              fontFamily:'Poppins-Medium',
-              textAlign:"center"
-
-            }}>{userInfo?.mobile}</Text>
-          <Text
-            style={{
-              color: Colors.text,
-              fontSize: responsiveFontSize(1.4),
-              fontFamily:'Poppins-Medium',
-              textAlign:"center",
-              marginBottom: 5,
-            }}>{userInfo?.email}</Text>
-      
-          </View>
-      
         </ImageBackground>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />
@@ -122,46 +126,44 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             {/* <Ionicons name="share-social-outline" size={22} /> */}
             <LogoViewer
-          Logosource={Share}
-          containerstyle={styles.logoImgContainer}
-          logostyle={styles.logoImg}
-        />
+              Logosource={Share}
+              containerstyle={styles.logoImgContainer}
+              logostyle={styles.logoImg}
+            />
             <Text
               style={{
                 fontSize: 15,
                 fontFamily: 'Roboto-Medium',
                 marginLeft: 5,
-                color:Colors.black
+                color: Colors.black,
               }}>
               Tell a Friend
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-
-          logout()
-          // props.navigation.popToTop();
-          props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'Onboarding' }],
-          });
-
-
-        }} style={{paddingVertical: 15}}>
+        <TouchableOpacity
+          onPress={() => {
+            logout();
+            // props.navigation.popToTop();
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'Onboarding'}],
+            });
+          }}
+          style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             {/* <Ionicons name="exit-outline" size={22} /> */}
             <LogoViewer
-          Logosource={Logout}
-          containerstyle={styles.logoImgContainer}
-          logostyle={styles.logoImg}
-        />
+              Logosource={Logout}
+              containerstyle={styles.logoImgContainer}
+              logostyle={styles.logoImg}
+            />
             <Text
               style={{
                 fontSize: 15,
                 fontFamily: 'Roboto-Medium',
                 marginLeft: 5,
-                color:Colors.black
-
+                color: Colors.black,
               }}>
               Sign Out
             </Text>
@@ -171,8 +173,6 @@ const namelogo = getFirstAndLastCharacters(userInfo?.agency_name)
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: windowWidth,
     marginTop: responsiveHeight(1),
-    alignItems:"center"
+    alignItems: 'center',
   },
   logoImgContainer: {
     backgroundColor: 'white',
@@ -214,20 +214,18 @@ const styles = StyleSheet.create({
     flex: 1,
     transform: [{scale: 1.5}],
   },
-  headText:{
-    fontSize:responsiveFontSize(2.2),
-    fontFamily:'Rubik-Regular',
-    color:"black",
-    width:responsiveWidth(82),
-    marginLeft:responsiveWidth(2),
+  headText: {
+    fontSize: responsiveFontSize(2.2),
+    fontFamily: 'Rubik-Regular',
+    color: 'black',
+    width: responsiveWidth(82),
+    marginLeft: responsiveWidth(2),
   },
   profileText: {
     fontSize: responsiveFontSize(3.4),
     fontFamily: 'Rubik-Regular',
     color: 'white',
-
-  },  
+  },
 });
-
 
 export default CustomDrawer;

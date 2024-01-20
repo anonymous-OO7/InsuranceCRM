@@ -19,12 +19,11 @@ const HeadingBox = ({
   headingText,
   inputplaceholder = 'box placeholder',
   containerstyle,
-  onInputChange = text => {
-  },
+  onInputChange = text => {},
   keyboardtype = 'default',
-  inputvalue
+  inputvalue,
 }) => {
-  console.log(inputvalue , "INOUT VALUe")
+  console.log(inputvalue, 'INOUT VALUe');
   return (
     <View style={containerstyle}>
       <Text style={HeadingBoxstyles.headingText}>{headingText}</Text>
@@ -32,7 +31,7 @@ const HeadingBox = ({
       <InputBox
         inputplaceholder={inputplaceholder}
         onChangeText={onInputChange}
-        keyboardtype= {keyboardtype}
+        keyboardtype={keyboardtype}
         value={inputvalue}
       />
     </View>

@@ -130,10 +130,9 @@ const PolicyCenter = props => {
         <Text style={styles.headingTxt}>Policy Center</Text>
         <Text style={styles.labelTxt}>Select insurance company</Text>
         {companydata.length == 0 ? (
-          <View style={{marginTop:responsiveHeight(2)}}>
-                      <ActivityIndicator size="small" color={Colors.activeprimary} />
-
-            </View>
+          <View style={{marginTop: responsiveHeight(2)}}>
+            <ActivityIndicator size="small" color={Colors.activeprimary} />
+          </View>
         ) : (
           <Dropdown
             style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}

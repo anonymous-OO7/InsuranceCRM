@@ -1,0 +1,22 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+/public
+/build
+*.config.js
+/android
+/ios
+/.bundle
+
+# Ignore Android and iOS directories
+**/android/*
+**/ios/*
+
+# Ignore Node modules
+**/node_modules/*
+
+# Ignore Git files
+**/.git/*
+**/.gitignore
+**/.gitattributes

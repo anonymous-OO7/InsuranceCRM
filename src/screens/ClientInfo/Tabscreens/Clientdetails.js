@@ -18,10 +18,10 @@ import Button from '../../../components/common/Button';
 import {windowWidth} from '../../../assets/utils/Dimensions';
 import HeadingBox from '../../../components/molecules/HeadingBox';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
-import { Dropdown } from 'react-native-element-dropdown';
-import { axiosrequest } from '../../../assets/utils/handler';
-const Clientdetails = (props) => {
-  console.log(props , "CLIENT DETAILS PROPS")
+import {Dropdown} from 'react-native-element-dropdown';
+import {axiosrequest} from '../../../assets/utils/handler';
+const Clientdetails = props => {
+  console.log(props, 'CLIENT DETAILS PROPS');
 
   const showToast = text => {
     ToastAndroid.show(text, ToastAndroid.SHORT);
@@ -30,7 +30,6 @@ const Clientdetails = (props) => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [value, setValue] = useState(props.clientdata.status);
   const [isFocus, setIsFocus] = useState(false);
-  
 
   const data = [
     {label: 'Active', value: 'active'},
@@ -97,7 +96,6 @@ const Clientdetails = (props) => {
     updateClientdata('address', text);
   };
 
-
   const updateClient = async () => {
     try {
       // Block of code to try
@@ -116,11 +114,11 @@ const Clientdetails = (props) => {
         endpoint,
       );
 
-      console.log("RESPONSE GOT" , res)
+      console.log('RESPONSE GOT', res);
 
       if (res != '' && res.status == 200) {
-        console.log("SUCCESS ADD" , res.data)
-        setEdit(false)
+        console.log('SUCCESS ADD', res.data);
+        setEdit(false);
         showToast('Update successful');
         // props.navigation.navigate('OtpVerify', { email: email });
       } else {
@@ -128,7 +126,7 @@ const Clientdetails = (props) => {
       }
     } catch (err) {
       // Block of code to handle errors
-      console.log("error" ,err)
+      console.log('error', err);
 
       showToast('Some error occured');
     }
@@ -138,15 +136,12 @@ const Clientdetails = (props) => {
     <View style={styles.container}>
       {edit ? (
         <View style={styles.emptyCtn}>
-          <ScrollView style={{marginLeft:responsiveWidth(8)}}>
-          <View>
+          <ScrollView style={{marginLeft: responsiveWidth(8)}}>
+            <View>
               <Text style={styles.headingText}>Client's status</Text>
 
               <Dropdown
-                style={[
-                  styles.dropdown,
-                  isFocus && {borderColor: 'blue'},
-                ]}
+                style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 itemTextStyle={styles.selectedTextStyle}
@@ -177,7 +172,6 @@ const Clientdetails = (props) => {
                 onInputChange={onphoneChange}
                 keyboardtype="phone-pad"
                 inputvalue={singleclient.phone}
-
               />
 
               <HeadingBox
@@ -186,7 +180,6 @@ const Clientdetails = (props) => {
                 props={props}
                 onInputChange={onemailChange}
                 inputvalue={singleclient.email}
-
               />
 
               <HeadingBox
@@ -196,7 +189,6 @@ const Clientdetails = (props) => {
                 onInputChange={onageChange}
                 keyboardtype="number-pad"
                 inputvalue={String(singleclient.age)}
-
               />
 
               <HeadingBox
@@ -205,7 +197,6 @@ const Clientdetails = (props) => {
                 props={props}
                 onInputChange={onprofessionChange}
                 inputvalue={singleclient.profession}
-
               />
 
               <HeadingBox
@@ -214,7 +205,6 @@ const Clientdetails = (props) => {
                 props={props}
                 onInputChange={onaddressChange}
                 inputvalue={singleclient.address}
-
               />
             </View>
           </ScrollView>
@@ -230,11 +220,17 @@ const Clientdetails = (props) => {
             ]}>
             <SaveCancelBtn
               onSave={() => {
-                if(singleclient.name != "" && singleclient.age !="" && singleclient.email != "" && singleclient.phone != "" && singleclient.profession != "" && singleclient.address != ""){
-                  updateClient()
-                }else{
+                if (
+                  singleclient.name != '' &&
+                  singleclient.age != '' &&
+                  singleclient.email != '' &&
+                  singleclient.phone != '' &&
+                  singleclient.profession != '' &&
+                  singleclient.address != ''
+                ) {
+                  updateClient();
+                } else {
                   showToast('Fill all fields!!');
-
                 }
               }}
               buttonctn={styles.savebuttonCtn}
@@ -248,7 +244,7 @@ const Clientdetails = (props) => {
                   profession: props.clientdata.profession,
                   address: props.clientdata.address,
                   clientpolicies: [],
-              })
+                });
                 setEdit(false);
               }}
             />
@@ -262,10 +258,7 @@ const Clientdetails = (props) => {
               <TextValue title="Phone number" value={singleclient.phone} />
               <TextValue title="Email ID" value={singleclient.email} />
               <TextValue title="Age" value={singleclient.age} />
-              <TextValue
-                title="Profession"
-                value={singleclient.profession}
-              />
+              <TextValue title="Profession" value={singleclient.profession} />
               <TextValue title="Address" value={singleclient.address} />
             </View>
           </View>
@@ -276,7 +269,7 @@ const Clientdetails = (props) => {
               btntext="Edit"
               buttonctn={styles.buttonCtn}
               onclick={() => {
-                setEdit(true)
+                setEdit(true);
               }}
             />
           </View>

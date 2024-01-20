@@ -21,22 +21,23 @@ const Radiobutton = ({
   btn2heading = 'Button 2',
   active = true,
   containerstyle,
-  onclickfirst =   () => {console.log("checking  default first click in!");},
-  onclicksecond =   () => {console.log("checking  default second click in!");}
-
+  onclickfirst = () => {
+    console.log('checking  default first click in!');
+  },
+  onclicksecond = () => {
+    console.log('checking  default second click in!');
+  },
 }) => {
-
-
-
-
-
-
   return (
     <View style={containerstyle}>
       <Text style={styles.headingtext}>{radioheading}</Text>
 
       <View style={styles.radiobtnCtn}>
-        <TouchableOpacity key={1} onPress={() => { onclickfirst() }}>
+        <TouchableOpacity
+          key={1}
+          onPress={() => {
+            onclickfirst();
+          }}>
           <View
             style={{
               height: responsiveHeight(2.5),
@@ -59,12 +60,19 @@ const Radiobutton = ({
             ) : null}
           </View>
         </TouchableOpacity>
-        <TouchableOpacity key={3} onPress={() => { onclickfirst() }}>
-        <Text style={styles.radiobtntext}>{btn1heading}</Text>
+        <TouchableOpacity
+          key={3}
+          onPress={() => {
+            onclickfirst();
+          }}>
+          <Text style={styles.radiobtntext}>{btn1heading}</Text>
         </TouchableOpacity>
-        
 
-        <TouchableOpacity key={2} onPress={() => { onclicksecond()}}>
+        <TouchableOpacity
+          key={2}
+          onPress={() => {
+            onclicksecond();
+          }}>
           <View
             style={{
               height: responsiveHeight(2.5),
@@ -74,7 +82,7 @@ const Radiobutton = ({
               borderColor: Colors.activeprimary,
               alignItems: 'center',
               justifyContent: 'center',
-              marginLeft:responsiveWidth(4)
+              marginLeft: responsiveWidth(4),
             }}>
             {active == false ? (
               <View
@@ -88,8 +96,12 @@ const Radiobutton = ({
             ) : null}
           </View>
         </TouchableOpacity>
-        <TouchableOpacity key={4} onPress={() => { onclicksecond()}}>
-        <Text style={styles.radiobtntext}>{btn2heading}</Text>
+        <TouchableOpacity
+          key={4}
+          onPress={() => {
+            onclicksecond();
+          }}>
+          <Text style={styles.radiobtntext}>{btn2heading}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -114,13 +126,13 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Light',
-    marginBottom:responsiveHeight(1)
+    marginBottom: responsiveHeight(1),
   },
   radiobtntext: {
     color: 'black',
     fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Light',
-    marginLeft:responsiveWidth(1.5)
+    marginLeft: responsiveWidth(1.5),
   },
 });
 

@@ -16,7 +16,7 @@ import WatchlistIcon from '../../assets/images/tabbar/WatchlistIcon';
 import Watchlist from '../../assets/images/Watchlist.svg';
 import LogoViewer from './LogoViewer';
 import {WatchSvg, ClientSvg} from '../../assets/svgs/SvgImages';
-import { animated, useSpring } from '@react-spring/native';
+import {animated, useSpring} from '@react-spring/native';
 
 const Counter = ({
   disabled = true,
@@ -30,9 +30,7 @@ const Counter = ({
   countervalue = 'Button',
   counteractive = true,
 }) => {
-
-
-  const props = useSpring({ number: countervalue, from: { number: 0 } });
+  const props = useSpring({number: countervalue, from: {number: 0}});
 
   return (
     <View style={[Counterstyles.container, buttonctn]}>
@@ -72,11 +70,10 @@ const Counter = ({
         </Text>
         <Text style={[Counterstyles.clientNumberText, clientnumberstyle]}>
           {/* {countervalue} */}
-        
-          <animated.Text style={{ fontSize: 24 }}>
-                {props.number.to(n => n.toFixed(0))}
-            </animated.Text>
-       
+
+          <animated.Text style={{fontSize: 24}}>
+            {props.number.to(n => n.toFixed(0))}
+          </animated.Text>
         </Text>
       </View>
     </View>

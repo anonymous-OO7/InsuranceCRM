@@ -15,30 +15,29 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import { BackSvg } from '../../assets/svgs/SvgImages';
+import {BackSvg} from '../../assets/svgs/SvgImages';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const fontScale = Dimensions.get('window').fontScale;
-import { Colors } from '../../assets/colors';
+import {Colors} from '../../assets/colors';
 import LogoViewer from '../common/LogoViewer';
 
-
-
-const TopBack = ({props  , heading = "Add new client"}) => {
-  console.log(props, 'props got in topback' , "---headin" , heading);
+const TopBack = ({props, heading = 'Add new client'}) => {
+  console.log(props, 'props got in topback', '---headin', heading);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topCtn}>
-
-        <TouchableOpacity onPress={() => {  props.navigation.goBack()}}>
-        <LogoViewer
-          Logosource={BackSvg}
-          containerstyle={styles.logoImgContainer}
-          logostyle={styles.logoImg}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.goBack();
+          }}>
+          <LogoViewer
+            Logosource={BackSvg}
+            containerstyle={styles.logoImgContainer}
+            logostyle={styles.logoImg}
+          />
         </TouchableOpacity>
-   
 
         <Text style={styles.headText}>{heading}</Text>
       </View>
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: windowWidth,
     marginTop: responsiveHeight(1),
-    alignItems:"center"
+    alignItems: 'center',
   },
   logoImgContainer: {
     backgroundColor: 'white',
@@ -86,13 +85,13 @@ const styles = StyleSheet.create({
     flex: 1,
     transform: [{scale: 1.5}],
   },
-  headText:{
-    fontSize:responsiveFontSize(2.2),
-    fontFamily:'Rubik-Regular',
-    color:"black",
-    width:responsiveWidth(82),
-    marginLeft:responsiveWidth(2),
-  }
+  headText: {
+    fontSize: responsiveFontSize(2.2),
+    fontFamily: 'Rubik-Regular',
+    color: 'black',
+    width: responsiveWidth(82),
+    marginLeft: responsiveWidth(2),
+  },
 });
 
 export default TopBack;

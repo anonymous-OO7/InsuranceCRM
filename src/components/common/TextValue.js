@@ -13,20 +13,13 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
-
-const TextValue = ({
-  title = 'Button',
-  value = 'Button',
-}) => {
-
-    console.log(title , value ,"VALUES IN TEXT")
+const TextValue = ({title = 'Button', value = 'Button'}) => {
+  console.log(title, value, 'VALUES IN TEXT');
   return (
-    <View >
+    <View>
+      <Text style={styles.textTitle}>{title}</Text>
 
-        <Text style={styles.textTitle}>{title}</Text>
-
-        <Text style={styles.textValue}>{value}</Text>
-  
+      <Text style={styles.textValue}>{value}</Text>
     </View>
   );
 };
@@ -35,9 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  textCtn: {
-  
-  },
+  textCtn: {},
   clientText: {
     fontSize: responsiveFontSize(1.6),
     fontFamily: 'Rubik-Regular',
@@ -49,18 +40,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Rubik-Medium',
     color: 'black',
   },
-  textTitle:{
+  textTitle: {
     fontSize: responsiveFontSize(2),
     fontFamily: 'Rubik-Light',
     color: 'black',
-    marginTop:responsiveHeight(2)
+    marginTop: responsiveHeight(2),
   },
-  textValue:{
+  textValue: {
     fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Regular',
     color: 'black',
-  }
-  
+  },
 });
 
 export default TextValue;

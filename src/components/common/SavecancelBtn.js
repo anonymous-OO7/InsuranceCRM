@@ -35,7 +35,10 @@ const SaveCancelBtn = ({
           <Text style={Buttonstyles.btnText}>Cancel</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity disabled={disabled} onPress={onSave} style={Buttonstyles.savebtn}>
+        <TouchableOpacity
+          disabled={disabled}
+          onPress={onSave}
+          style={Buttonstyles.savebtn}>
           <Text style={[Buttonstyles.btnText, {color: Colors.white}]}>
             Save
           </Text>
