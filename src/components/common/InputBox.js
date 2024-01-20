@@ -25,7 +25,8 @@ const InputBox = ({
     console.log('Default On texthandler  ' + text);
   },
   keyboardtype = 'default',
-  onfocushandler =  () => {}
+  onfocushandler =  () => {},
+  value
 }) => {
 
 
@@ -42,6 +43,7 @@ const InputBox = ({
         keyboardType= {keyboardtype}
         placeholderTextColor={Colors.textcolor} 
         onFocus={onfocushandler}
+        value={value}
       />
     </View>
 

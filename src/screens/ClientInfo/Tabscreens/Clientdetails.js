@@ -19,6 +19,7 @@ import {windowWidth} from '../../../assets/utils/Dimensions';
 import HeadingBox from '../../../components/molecules/HeadingBox';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
 import { Dropdown } from 'react-native-element-dropdown';
+import { axiosrequest } from '../../../assets/utils/handler';
 const Clientdetails = (props) => {
   console.log(props , "CLIENT DETAILS PROPS")
 
@@ -27,8 +28,9 @@ const Clientdetails = (props) => {
   };
   const [edit, setEdit] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(props.clientdata.status);
   const [isFocus, setIsFocus] = useState(false);
+  
 
   const data = [
     {label: 'Active', value: 'active'},
@@ -54,12 +56,12 @@ const Clientdetails = (props) => {
   }, []);
 
   const [singleclient, setSingleclient] = useState({
-    name: '',
-    phone: 0,
-    email: '',
-    age: 0,
-    profession: '',
-    address: '',
+    name: props.clientdata.name,
+    phone: props.clientdata.phone,
+    email: props.clientdata.email,
+    age: props.clientdata.age,
+    profession: props.clientdata.profession,
+    address: props.clientdata.address,
     clientpolicies: [],
   });
 
@@ -96,11 +98,47 @@ const Clientdetails = (props) => {
   };
 
 
+  const updateClient = async () => {
+    try {
+      // Block of code to try
+      let endpoint = `/client/${props.clientdata.id}`;
+      const res = await axiosrequest(
+        'put',
+        {
+          name: singleclient.name,
+          phone: singleclient.phone,
+          email: singleclient.email,
+          age: parseInt(singleclient.age),
+          profession: singleclient.profession,
+          address: singleclient.address,
+          status: value,
+        },
+        endpoint,
+      );
+
+      console.log("RESPONSE GOT" , res)
+
+      if (res != '' && res.status == 200) {
+        console.log("SUCCESS ADD" , res.data)
+        setEdit(false)
+        showToast('Update successful');
+        // props.navigation.navigate('OtpVerify', { email: email });
+      } else {
+        console.log(res.data.message);
+      }
+    } catch (err) {
+      // Block of code to handle errors
+      console.log("error" ,err)
+
+      showToast('Some error occured');
+    }
+  };
+
   return (
     <View style={styles.container}>
       {edit ? (
         <View style={styles.emptyCtn}>
-          <ScrollView>
+          <ScrollView style={{marginLeft:responsiveWidth(8)}}>
           <View>
               <Text style={styles.headingText}>Client's status</Text>
 
@@ -130,6 +168,7 @@ const Clientdetails = (props) => {
                 inputplaceholder="Enter name"
                 props={props}
                 onInputChange={onNameChange}
+                inputvalue={singleclient.name}
               />
               <HeadingBox
                 headingText="Phone no."
@@ -137,6 +176,8 @@ const Clientdetails = (props) => {
                 props={props}
                 onInputChange={onphoneChange}
                 keyboardtype="phone-pad"
+                inputvalue={singleclient.phone}
+
               />
 
               <HeadingBox
@@ -144,6 +185,8 @@ const Clientdetails = (props) => {
                 inputplaceholder="Enter Email"
                 props={props}
                 onInputChange={onemailChange}
+                inputvalue={singleclient.email}
+
               />
 
               <HeadingBox
@@ -152,6 +195,8 @@ const Clientdetails = (props) => {
                 props={props}
                 onInputChange={onageChange}
                 keyboardtype="number-pad"
+                inputvalue={String(singleclient.age)}
+
               />
 
               <HeadingBox
@@ -159,6 +204,8 @@ const Clientdetails = (props) => {
                 inputplaceholder="Enter Profession"
                 props={props}
                 onInputChange={onprofessionChange}
+                inputvalue={singleclient.profession}
+
               />
 
               <HeadingBox
@@ -166,6 +213,8 @@ const Clientdetails = (props) => {
                 inputplaceholder="Enter Address"
                 props={props}
                 onInputChange={onaddressChange}
+                inputvalue={singleclient.address}
+
               />
             </View>
           </ScrollView>
@@ -181,11 +230,25 @@ const Clientdetails = (props) => {
             ]}>
             <SaveCancelBtn
               onSave={() => {
-                // addPolicyData();
+                if(singleclient.name != "" && singleclient.age !="" && singleclient.email != "" && singleclient.phone != "" && singleclient.profession != "" && singleclient.address != ""){
+                  updateClient()
+                }else{
+                  showToast('Fill all fields!!');
+
+                }
               }}
               buttonctn={styles.savebuttonCtn}
               onCancel={() => {
                 showToast('Cancelled!!');
+                setSingleclient({
+                  name: props.clientdata.name,
+                  phone: props.clientdata.phone,
+                  email: props.clientdata.email,
+                  age: props.clientdata.age,
+                  profession: props.clientdata.profession,
+                  address: props.clientdata.address,
+                  clientpolicies: [],
+              })
                 setEdit(false);
               }}
             />
@@ -195,15 +258,15 @@ const Clientdetails = (props) => {
         <View style={styles.emptyCtn}>
           <View style={{flex: 1}}>
             <View style={styles.textCtn}>
-              <TextValue title="Client name" value={props.clientdata.name} />
-              <TextValue title="Phone number" value={props.clientdata.phone} />
-              <TextValue title="Email ID" value={props.clientdata.email} />
-              <TextValue title="Age" value={props.clientdata.age} />
+              <TextValue title="Client name" value={singleclient.name} />
+              <TextValue title="Phone number" value={singleclient.phone} />
+              <TextValue title="Email ID" value={singleclient.email} />
+              <TextValue title="Age" value={singleclient.age} />
               <TextValue
                 title="Profession"
-                value={props.clientdata.profession}
+                value={singleclient.profession}
               />
-              <TextValue title="Address" value={props.clientdata.address} />
+              <TextValue title="Address" value={singleclient.address} />
             </View>
           </View>
 
