@@ -13,6 +13,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
+  KeyboardAvoidingView,
+  Platform,
+  KeyboardEvent,
+  Keyboard
 } from 'react-native';
 import {LogoImage} from '../../assets/svgs/SvgImages';
 import {
@@ -31,6 +35,28 @@ const OtpVerify = props => {
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
   };
+
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  console.log("KEYBOARD HEIGHTTT")
+  function onKeyboardDidShow(e) { // Remove type here if not using TypeScript
+    console.log(e.endCoordinates.height ,"KEYBOARD HEIGHTTT")
+    setKeyboardHeight(e.endCoordinates.height - responsiveHeight(4));
+  }
+
+  function onKeyboardDidHide() {
+    setKeyboardHeight(0);
+  }
+  useEffect(() => {
+  
+
+    const showSubscription = Keyboard.addListener('keyboardDidShow', onKeyboardDidShow);
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   const callOtp = async () => {
     try {
@@ -80,7 +106,10 @@ const OtpVerify = props => {
   };
 
   return (
-    <View style={styles.mainCtn}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    style={styles.mainCtn}
+  >
       <View style={styles.innerCtn}>
         <LogoViewer
           Logosource={LogoImage}
@@ -120,7 +149,7 @@ const OtpVerify = props => {
           </View>
         </View>
 
-        <View style={styles.submitButton}>
+        <View style={[styles.submitButton,{    bottom: Platform.OS === 'ios' ?  keyboardHeight + responsiveHeight(8)  : responsiveHeight(8)} ]}>
           <Button
             disabled={otp.length >= 4 ? false : true}
             onclick={callOtp}
@@ -130,7 +159,7 @@ const OtpVerify = props => {
           />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
