@@ -22,6 +22,7 @@ import Radiobutton from '../../../components/common/Radiobutton';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {axiosrequest} from '../../../assets/utils/handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Policydetails = props => {
   const showToast = text => {
@@ -202,6 +203,7 @@ const Policydetails = props => {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <View style={styles.maincontainer}>
       {addpolicy ? (
         <View style={styles.emptyCtn}>
@@ -424,6 +426,7 @@ const Policydetails = props => {
         onCancel={hideDatePicker}
       />
     </View>
+    </KeyboardAwareScrollView>
   );
 };
 

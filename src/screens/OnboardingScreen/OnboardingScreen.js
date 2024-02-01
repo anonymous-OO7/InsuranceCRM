@@ -12,7 +12,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {showToast} from '../../assets/utils/Helpers';
 import Toast from 'react-native-toast-message';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const OnboardingScreen = (props, {navigation}) => {
   const [email, setEmail] = useState('');
@@ -71,6 +71,7 @@ const OnboardingScreen = (props, {navigation}) => {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <SafeAreaView style={OnboardingStyle.container}>
       <ScrollView automaticallyAdjustKeyboardInsets={true} ref={scrollViewRef}>
         <LogoViewer
@@ -125,6 +126,7 @@ const OnboardingScreen = (props, {navigation}) => {
       <Toast />
 
     </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 

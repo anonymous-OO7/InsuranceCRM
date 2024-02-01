@@ -23,6 +23,8 @@ import SaveCancelBtn from '../../../components/common/SavecancelBtn';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {axiosrequest} from '../../../assets/utils/handler';
 import {Dropdown} from 'react-native-element-dropdown';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 const Events = props => {
   const showToast = text => {
@@ -172,6 +174,7 @@ const Events = props => {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <View style={styles.maincontainer}>
       {addpolicy ? (
         <View style={styles.emptyCtn}>
@@ -306,6 +309,7 @@ const Events = props => {
         onCancel={hideDatePicker}
       />
     </View>
+    </KeyboardAwareScrollView>
   );
 };
 

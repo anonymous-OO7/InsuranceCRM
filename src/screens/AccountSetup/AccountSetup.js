@@ -6,7 +6,7 @@ import HeadingBox from '../../components/molecules/HeadingBox';
 import Button from '../../components/common/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {axiosrequest} from '../../assets/utils/handler';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {jwtDecode} from 'jwt-decode';
 
 // import "core-js/stable/atob"; // <- polyfill here
@@ -118,6 +118,7 @@ const AccountSetup = props => {
   }, []);
 
   return (
+    <KeyboardAwareScrollView>
     <SafeAreaView style={AccountSetupStyle.container}>
       <View style={AccountSetupStyle.view1}>
         <ScrollView automaticallyAdjustKeyboardInsets={true}>
@@ -165,6 +166,7 @@ const AccountSetup = props => {
         />
       </View>
     </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 

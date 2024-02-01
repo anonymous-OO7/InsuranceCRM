@@ -23,6 +23,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const AddClient = props => {
   const showToast = text => {
@@ -154,6 +155,8 @@ const AddClient = props => {
   };
 
   return (
+    <KeyboardAwareScrollView>
+
     <SafeAreaView style={AddclientStyle.container}>
       <View style={{marginBottom: responsiveHeight(0)}}>
         <TopBack props={props} />
@@ -362,6 +365,7 @@ const AddClient = props => {
         )}
       </View>
     </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -20,6 +20,8 @@ import HeadingBox from '../../../components/molecules/HeadingBox';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
 import { Dropdown } from 'react-native-element-dropdown';
 import { axiosrequest } from '../../../assets/utils/handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 const Clientdetails = (props) => {
   console.log(props , "CLIENT DETAILS PROPS")
 
@@ -135,6 +137,8 @@ const Clientdetails = (props) => {
   };
 
   return (
+    <KeyboardAwareScrollView>
+
     <View style={styles.container}>
       {edit ? (
         <View style={styles.emptyCtn}>
@@ -283,6 +287,7 @@ const Clientdetails = (props) => {
         </View>
       )}
     </View>
+    </KeyboardAwareScrollView>
   );
 };
 
