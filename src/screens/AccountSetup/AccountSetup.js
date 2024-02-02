@@ -118,7 +118,7 @@ const AccountSetup = props => {
   }, []);
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{backgroundColor:"white"}}>
     <SafeAreaView style={AccountSetupStyle.container}>
       <View style={AccountSetupStyle.view1}>
         <ScrollView automaticallyAdjustKeyboardInsets={true}>

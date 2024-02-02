@@ -330,6 +330,10 @@ const styles = StyleSheet.create({
     marginVertical: responsiveWidth(1),
     borderRadius: responsiveWidth(4),
     maxHeight: responsiveHeight(52),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
 });
 export default PolicyCenter;

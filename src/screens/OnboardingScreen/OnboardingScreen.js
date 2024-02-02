@@ -71,7 +71,7 @@ const OnboardingScreen = (props, {navigation}) => {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{backgroundColor:"white"}}>
     <SafeAreaView style={OnboardingStyle.container}>
       <ScrollView automaticallyAdjustKeyboardInsets={true} ref={scrollViewRef}>
         <LogoViewer

@@ -203,7 +203,7 @@ const Policydetails = props => {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{backgroundColor:"white"}}>
     <View style={styles.maincontainer}>
       {addpolicy ? (
         <View style={styles.emptyCtn}>
@@ -484,6 +484,10 @@ const styles = StyleSheet.create({
     borderRadius: responsiveWidth(4),
     margin: responsiveWidth(4),
     elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   containerlist: {
     flexDirection: 'row',
@@ -498,6 +502,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
+    height:responsiveHeight(80)
+
   },
   ctn1: {
     backgroundColor: 'white',

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, TextInput, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, TextInput, StyleSheet, SafeAreaView} from 'react-native';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -23,7 +23,7 @@ const SearchScreen = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.innerCtn}>
         <TopBack heading="Search" props={props} />
         <View style={styles.searchSection}>
@@ -44,7 +44,7 @@ const SearchScreen = props => {
           <ListView props={props} data={filteredClientlist} />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -69,6 +69,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     elevation: 2,
     paddingRight: responsiveHeight(1),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   searchIcon: {
     padding: 10,
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
   clientlistCtn: {
     backgroundColor: Colors.white,
     marginTop: responsiveHeight(2),
-    height: responsiveHeight(90),
+    height: responsiveHeight(80),
   },
 });
 

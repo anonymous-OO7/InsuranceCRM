@@ -16,8 +16,8 @@ import {Colors} from '../../assets/colors.js';
 import {windowWidth} from '../../assets/utils/Dimensions';
 import ListView from '../../components/molecules/ListView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {responsiveFontSize} from 'react-native-responsive-dimensions';
-
+import {responsiveFontSize, responsiveHeight} from 'react-native-responsive-dimensions';
+import axios from 'axios';
 const HomeScreen = props => {
   const [userInfo, setUserInfo] = useState(null);
   const [clientlist, setClientlist] = useState([]);
@@ -26,9 +26,12 @@ const HomeScreen = props => {
   const loadUserInfo = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('userinfo');
+      console.log(jsonValue , "JSON VALUEEE")
 
       if (jsonValue != null) {
         setUserInfo(JSON.parse(jsonValue));
+        console.log(JSON.parse(jsonValue) , "JSON VALUEEE after parsing")
+
       }
     } catch (e) {
       // error reading value
@@ -36,11 +39,37 @@ const HomeScreen = props => {
     }
   };
 
+
+  const fetchData = async () => {
+    try {
+      // Replace 'https://api.example.com/data' with your actual API endpoint
+      const response = await axios.get('https://reactnative.dev/movies.json');
+
+      console.error('API Response: DUMMJYY', response);
+      // console.error('API Response DATATAT: DUMMJYY', response.data);
+
+      // const res = await axiosrequest('get', {}, '/movies.json');
+
+      // console.error('API Response DATATAT: DUMMJYY', res);
+
+      // Assuming your API returns a JSON object, access the data property
+      
+    } catch (error) {
+      console.error('API Error:', error);
+  
+    }
+
+    
+  };
+
+
+
   useFocusEffect(
     useCallback(() => {
       // Function to run when the screen is focused
       const onFocus = () => {
         // Your focus-related logic here
+        // fetchData()
         loadUserInfo();
         getclients();
       };
@@ -56,11 +85,20 @@ const HomeScreen = props => {
   };
 
   const getclients = async () => {
+
+ 
+
+
+
     setIsloading(true);
     try {
       // Block of code to try
       let endpoint = `/client`;
-      const res = await axiosrequest('get', {}, endpoint);
+
+      console.log("HEREEE")
+      let res = await axiosrequest('get', {}, endpoint);
+      console.log(" afterrr HEREEE")
+
       setIsloading(false);
       if (res != '' && res.status == 200) {
         // props.navigation.navigate('OtpVerify', { email: email });
@@ -84,7 +122,7 @@ const HomeScreen = props => {
       const lastChar = words[words.length - 1][0].toUpperCase();
       return firstChar + lastChar;
     } catch (error) {
-      console.log('EERO');
+      console.log( error ,  'EERO IN HOMESCREEN');
     }
   }
 
@@ -185,7 +223,11 @@ const HomeScreen = props => {
                 />
               </View>
             ) : (
-              <ListView props={props.props} data={clientlist} />
+
+              <View style={{backgroundColor:"white",height:responsiveHeight(50)}}>
+                              <ListView props={props.props} data={clientlist} />
+
+                </View>
             )}
           </View>
         </View>

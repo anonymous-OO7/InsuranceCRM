@@ -160,6 +160,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: responsiveWidth(1),
     marginRight: responsiveWidth(1),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   title: {
     fontSize: 32,

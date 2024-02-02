@@ -56,7 +56,7 @@ const CustomDrawer = props => {
       
     } catch (error) {
       
-      console.log("EERO")
+      console.log(error , "EERO inside custom drawer")
     }
   
 

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import {
   responsiveHeight,
@@ -131,7 +132,7 @@ const ClientInfo = props => {
   const namelogo = getFirstAndLastCharacters(clientdata?.name);
 
   return (
-    <View style={styles.maincontainer}>
+    <SafeAreaView style={styles.maincontainer}>
       <View style={styles.topCtn}>
         <TouchableOpacity
           onPress={() => {
@@ -172,7 +173,7 @@ const ClientInfo = props => {
         }}
         renderTabBar={renderTabBar}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

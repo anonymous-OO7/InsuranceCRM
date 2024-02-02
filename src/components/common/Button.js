@@ -60,7 +60,11 @@ const Buttonstyles = StyleSheet.create({
         borderRadius:responsiveHeight(1),
         alignItems:"center",
         justifyContent:"center",
-        elevation:5
+        elevation:5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
 
     }
   });

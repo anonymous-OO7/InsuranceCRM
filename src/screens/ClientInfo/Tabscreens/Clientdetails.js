@@ -6,6 +6,7 @@ import {
   Text,
   Keyboard,
   ToastAndroid,
+  SafeAreaView,
 } from 'react-native';
 import TextValue from '../../../components/common/TextValue';
 import {
@@ -137,7 +138,8 @@ const Clientdetails = (props) => {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{backgroundColor:"white"}}>
+      <SafeAreaView>
 
     <View style={styles.container}>
       {edit ? (
@@ -287,6 +289,7 @@ const Clientdetails = (props) => {
         </View>
       )}
     </View>
+    </SafeAreaView>
     </KeyboardAwareScrollView>
   );
 };

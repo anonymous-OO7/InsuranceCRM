@@ -29,6 +29,10 @@ HomeScreenStyle = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(10),
     elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   logoImg: {
     height: responsiveHeight(7),
@@ -96,6 +100,11 @@ HomeScreenStyle = StyleSheet.create({
     backgroundColor: '#fff',
     elevation: 2,
     paddingRight: responsiveHeight(1),
+    shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.2,
+  shadowRadius: 1,
+
   },
   searchIcon: {
     padding: 10,

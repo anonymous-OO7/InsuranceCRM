@@ -155,9 +155,9 @@ const AddClient = props => {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{backgroundColor:"white"}}>
 
-    <SafeAreaView style={AddclientStyle.container}>
+    <View style={AddclientStyle.container}>
       <View style={{marginBottom: responsiveHeight(0)}}>
         <TopBack props={props} />
       </View>
@@ -364,7 +364,7 @@ const AddClient = props => {
           </>
         )}
       </View>
-    </SafeAreaView>
+    </View>
     </KeyboardAwareScrollView>
   );
 };
